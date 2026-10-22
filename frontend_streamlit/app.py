@@ -5,7 +5,6 @@ import plotly.graph_objects as go
 from datetime import date, datetime, timedelta
 import sys
 from pathlib import Path
-import textwrap
 
 # Setup sys.path for local service imports
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -22,12 +21,6 @@ from backend.app.models import FinancialProfile, InstallmentPlan, InstallmentPay
 # Initialize database
 init_db()
 
-# Safe HTML Renderer - Strips all indentation so Markdown NEVER outputs raw HTML as code
-def html(content: str):
-    """Safely renders HTML without markdown code block misinterpretation."""
-    clean = textwrap.dedent(content).strip()
-    st.markdown(clean, unsafe_allow_html=True)
-
 # Page configuration
 st.set_page_config(
     page_title="Financial Parallelverse | FinTech Simulator",
@@ -36,8 +29,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom High-End FinTech Design System
-html("""
+# Custom High-End Theme Styling (Global CSS only, no card HTML)
+st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
@@ -50,74 +43,36 @@ html("""
         color: #f1f5f9;
     }
 
-    /* Top Navigation Banner */
-    .top-banner {
-        background: linear-gradient(90deg, rgba(16, 185, 129, 0.12) 0%, rgba(6, 182, 212, 0.12) 50%, rgba(99, 102, 241, 0.12) 100%);
-        border: 1px solid rgba(16, 185, 129, 0.25);
-        border-radius: 12px;
-        padding: 0.65rem 1.25rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
+    /* Streamlit Containers as FinTech Glassmorphic Cards */
+    div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlockBorderWrapper"] {
+        background: linear-gradient(135deg, rgba(19, 29, 49, 0.75) 0%, rgba(13, 20, 36, 0.9) 100%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 16px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+        padding: 1rem !important;
+        transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
-    /* Typography */
-    .gradient-header {
-        background: linear-gradient(135deg, #ffffff 20%, #10b981 70%, #06b6d4 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        margin-bottom: 0.2rem;
+    div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+        border-color: rgba(16, 185, 129, 0.35) !important;
+        transform: translateY(-2px);
     }
 
-    /* FinTech Cards */
-    .fin-card {
-        background: linear-gradient(135deg, rgba(19, 29, 49, 0.8) 0%, rgba(13, 20, 36, 0.9) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 1.3rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        margin-bottom: 1.2rem;
+    /* Metric Values */
+    div[data-testid="stMetricValue"] > div {
+        color: #f8fafc !important;
+        font-weight: 800 !important;
+        font-size: 1.85rem !important;
+        letter-spacing: -0.02em !important;
     }
 
-    .stat-label {
-        color: #94a3b8;
-        font-size: 0.78rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        margin-bottom: 0.35rem;
+    div[data-testid="stMetricLabel"] > div > p {
+        color: #94a3b8 !important;
+        font-size: 0.78rem !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
     }
-
-    .stat-value {
-        font-size: 1.95rem;
-        font-weight: 800;
-        color: #f8fafc;
-        letter-spacing: -0.02em;
-        line-height: 1.1;
-    }
-
-    .stat-positive { color: #10b981 !important; }
-    .stat-negative { color: #f43f5e !important; }
-    .stat-warning { color: #f59e0b !important; }
-    .stat-info { color: #38bdf8 !important; }
-
-    /* Badges */
-    .badge {
-        display: inline-block;
-        padding: 0.25rem 0.7rem;
-        border-radius: 9999px;
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-    }
-    .badge-success { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .badge-warning { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-    .badge-danger { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
-    .badge-info { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid rgba(6, 182, 212, 0.3); }
 
     /* Sidebar */
     section[data-testid="stSidebar"] {
@@ -125,21 +80,28 @@ html("""
         border-right: 1px solid rgba(255, 255, 255, 0.07);
     }
 
+    /* Buttons */
     .stButton>button {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
         color: #041a11 !important;
-        font-weight: 700;
-        border: none;
-        border-radius: 10px;
-        padding: 0.55rem 1.4rem;
-        box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+        font-weight: 700 !important;
+        border: none !important;
+        border-radius: 10px !important;
+        padding: 0.55rem 1.4rem !important;
+        box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3) !important;
     }
     .stButton>button:hover {
-        background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+        background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
         color: #02120b !important;
     }
+
+    /* Progress bar */
+    .stProgress > div > div > div > div {
+        background: linear-gradient(90deg, #10b981 0%, #06b6d4 100%) !important;
+        border-radius: 9999px !important;
+    }
 </style>
-""")
+""", unsafe_allow_html=True)
 
 # Database helper
 def get_user_profile():
@@ -168,17 +130,8 @@ def get_user_profile():
 
 # Sidebar Navigation & Persona Presets
 with st.sidebar:
-    html("""
-    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 22px;">
-        <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);">
-            🌌
-        </div>
-        <div>
-            <h2 style="margin: 0; font-size: 1.2rem; font-weight: 800; color: #f8fafc; letter-spacing: -0.02em;">Parallelverse</h2>
-            <p style="margin: 0; font-size: 0.74rem; color: #10b981; font-weight: 600;">FinTech Future Simulator</p>
-        </div>
-    </div>
-    """)
+    st.markdown("## 🌌 Parallelverse")
+    st.caption("FinTech Future Simulator")
 
     page = st.radio(
         "NAVIGATION",
@@ -193,7 +146,7 @@ with st.sidebar:
         index=0
     )
 
-    st.markdown("---")
+    st.divider()
     st.markdown("**⚡ Quick Persona Presets**")
     c_p1, c_p2 = st.columns(2)
     with c_p1:
@@ -227,7 +180,7 @@ with st.sidebar:
             db.commit()
             st.rerun()
 
-    st.markdown("---")
+    st.divider()
     profile = get_user_profile()
     metrics = FinancialEngine.calculate_profile_metrics(
         monthly_income=profile.monthly_income,
@@ -238,92 +191,65 @@ with st.sidebar:
         emergency_fund_target=profile.emergency_fund_target
     )
 
-    html(f"""
-    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 0.8rem; font-size: 0.8rem;">
-        <div style="color: #94a3b8; font-size: 0.72rem; text-transform: uppercase;">Active Profile</div>
-        <div style="color: #f8fafc; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem;">{profile.full_name}</div>
-        <div style="display: flex; justify-content: space-between; margin-top: 0.25rem;">
-            <span style="color: #94a3b8;">Income:</span>
-            <span style="color: #f8fafc; font-weight: 600;">₹{profile.monthly_income:,.0f}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; margin-top: 0.25rem;">
-            <span style="color: #94a3b8;">Liquid Reserve:</span>
-            <span style="color: #10b981; font-weight: 600;">₹{profile.current_savings:,.0f}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; margin-top: 0.25rem;">
-            <span style="color: #94a3b8;">Net Surplus:</span>
-            <span style="color: {'#10b981' if metrics['free_cash_flow'] >= 0 else '#f43f5e'}; font-weight: 600;">₹{metrics['free_cash_flow']:,.0f}</span>
-        </div>
-    </div>
-    <div style="margin-top: 1.5rem; font-size: 0.72rem; color: #64748b; text-align: center;">🛡️ Hack-o-Ween PESU &bull; Team Dark_Knights</div>
-    """)
+    with st.container(border=True):
+        st.caption("ACTIVE USER PROFILE")
+        st.markdown(f"**{profile.full_name}**")
+        st.write(f"Income: **₹{profile.monthly_income:,.0f}**")
+        st.write(f"Savings: **₹{profile.current_savings:,.0f}**")
+        st.write(f"Net Surplus: **₹{metrics['free_cash_flow']:,.0f}**")
 
-# Top Status Banner
-html("""
-<div class="top-banner">
-    <div style="display: flex; align-items: center; gap: 10px;">
-        <span style="background: #10b981; width: 8px; height: 8px; border-radius: 50%; display: inline-block;"></span>
-        <span style="font-size: 0.85rem; font-weight: 600; color: #f8fafc;">Deterministic Financial Parallelverse Engine &bull; Dual-Mode Live</span>
-    </div>
-    <div style="display: flex; align-items: center; gap: 15px; font-size: 0.8rem; color: #94a3b8;">
-        <span>Backend: <b style="color: #10b981;">FastAPI :8000</b></span>
-        <span>Storage: <b style="color: #38bdf8;">SQLite 3</b></span>
-        <span>Reminders: <b style="color: #fbbf24;">RFC 5545 iCal</b></span>
-    </div>
-</div>
-""")
+    st.caption("🛡️ Hack-o-Ween PESU • Team Dark_Knights")
+
+# Top Status Indicators
+st.caption("🟢 **Deterministic Financial Parallelverse Engine** | Dual-Mode Live (:8000 & :8501) | RFC 5545 iCalendar Enabled")
 
 # ==============================================================================
 # PAGE 1: OVERVIEW DASHBOARD
 # ==============================================================================
 if page == "📊 Executive Dashboard":
-    html("""
-    <h1 class="gradient-header" style="font-size: 2.3rem;">Executive Financial Overview</h1>
-    <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.8rem;">Real-time capital structure, baseline cash flow dynamics, and financial vulnerability analysis.</p>
-    """)
+    st.title("📊 Executive Financial Overview")
+    st.markdown("Real-time capital structure, baseline cash flow dynamics, and financial vulnerability analysis.")
 
-    # 4 Executive Metric Cards
+    # 4 Executive Metric Cards using Native st.container & st.metric
     c1, c2, c3, c4 = st.columns(4)
     with c1:
-        flow_class = "stat-negative" if metrics['free_cash_flow'] < 0 else "stat-positive"
-        html(f"""
-        <div class="fin-card">
-            <div class="stat-label">💵 Monthly Free Cash Flow</div>
-            <div class="stat-value {flow_class}">₹{metrics['free_cash_flow']:,.0f}</div>
-            <div style="font-size: 0.78rem; color: #38bdf8; margin-top: 0.4rem;">Savings Rate: <b>{metrics['savings_rate_pct']:.1f}%</b></div>
-        </div>
-        """)
+        with st.container(border=True):
+            st.metric(
+                label="Monthly Free Cash Flow",
+                value=f"₹{metrics['free_cash_flow']:,.0f}",
+                delta=f"{metrics['savings_rate_pct']:.1f}% Savings Rate",
+                delta_color="normal" if metrics['free_cash_flow'] >= 0 else "inverse"
+            )
 
     with c2:
-        cov_class = "stat-positive" if metrics['emergency_coverage_pct'] >= 100 else "stat-warning"
-        html(f"""
-        <div class="fin-card">
-            <div class="stat-label">🏦 Total Liquid Savings</div>
-            <div class="stat-value">₹{profile.current_savings:,.0f}</div>
-            <div style="font-size: 0.78rem; margin-top: 0.4rem;" class="{cov_class}">Target Coverage: <b>{metrics['emergency_coverage_pct']:.0f}%</b></div>
-        </div>
-        """)
+        with st.container(border=True):
+            st.metric(
+                label="Total Liquid Savings",
+                value=f"₹{profile.current_savings:,.0f}",
+                delta=f"{metrics['emergency_coverage_pct']:.0f}% Target Coverage",
+                delta_color="normal" if metrics['emergency_coverage_pct'] >= 100 else "off"
+            )
 
     with c3:
-        html(f"""
-        <div class="fin-card">
-            <div class="stat-label">🛡️ Emergency Runway</div>
-            <div class="stat-value">{metrics['months_of_runway']:.1f} <span style="font-size: 1rem; color: #94a3b8;">Months</span></div>
-            <div style="font-size: 0.78rem; color: #38bdf8; margin-top: 0.4rem;">Survival without salary</div>
-        </div>
-        """)
+        with st.container(border=True):
+            st.metric(
+                label="Emergency Runway",
+                value=f"{metrics['months_of_runway']:.1f} Months",
+                delta="Survival Without Income"
+            )
 
     with c4:
-        dti_class = 'stat-negative' if metrics['debt_to_income_pct'] > 40 else ('stat-warning' if metrics['debt_to_income_pct'] > 25 else 'stat-positive')
-        html(f"""
-        <div class="fin-card">
-            <div class="stat-label">⚖️ Debt-to-Income (DTI)</div>
-            <div class="stat-value {dti_class}">{metrics['debt_to_income_pct']:.1f}%</div>
-            <div style="font-size: 0.78rem; margin-top: 0.4rem;" class="stat-positive">Safe Threshold: &lt; 35%</div>
-        </div>
-        """)
+        with st.container(border=True):
+            st.metric(
+                label="Debt-to-Income (DTI)",
+                value=f"{metrics['debt_to_income_pct']:.1f}%",
+                delta="Safe Threshold: < 35%",
+                delta_color="inverse" if metrics['debt_to_income_pct'] > 35 else "normal"
+            )
 
-    # Visual Breakdown Chart and Decision Card
+    st.markdown("---")
+
+    # Inflow vs Outflows Visual Breakdown and Contemplated Purchase
     col_chart, col_decision = st.columns([1.6, 1.1])
 
     with col_chart:
@@ -372,49 +298,30 @@ if page == "📊 Executive Dashboard":
         st.subheader("🎯 Contemplated Purchase Commitment")
         cash_depletion_pct = (profile.planned_purchase_amount / max(1.0, profile.current_savings)) * 100.0
         rem_after = profile.current_savings - profile.planned_purchase_amount
-        rem_color = '#f43f5e' if rem_after < profile.emergency_fund_target else '#10b981'
-        dep_color = '#f43f5e' if cash_depletion_pct > 60 else '#fbbf24'
 
-        html(f"""
-        <div class="fin-card" style="border: 1px solid rgba(6, 182, 212, 0.35);">
-            <div style="font-size: 0.75rem; color: #06b6d4; font-weight: 700; text-transform: uppercase;">Active Purchase Evaluation</div>
-            <h2 style="margin: 0.4rem 0 0.2rem 0; font-size: 1.35rem; color: #f8fafc;">{profile.planned_purchase_name}</h2>
-            <div style="font-size: 2.1rem; font-weight: 800; color: #06b6d4; margin-bottom: 0.8rem;">
-                ₹{profile.planned_purchase_amount:,.0f}
-            </div>
+        with st.container(border=True):
+            st.caption("ACTIVE PURCHASE EVALUATION")
+            st.markdown(f"### {profile.planned_purchase_name}")
+            st.markdown(f"## ₹{profile.planned_purchase_amount:,.0f}")
             
-            <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.8rem; font-size: 0.82rem; color: #94a3b8;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
-                    <span>Upfront Cash Impact:</span>
-                    <span style="color: {dep_color}; font-weight: 700;">
-                        Consumes {cash_depletion_pct:.0f}% of liquid savings
-                    </span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
-                    <span>Remaining Emergency Buffer:</span>
-                    <span style="color: {rem_color}; font-weight: 700;">
-                        ₹{max(0.0, rem_after):,.0f}
-                    </span>
-                </div>
-            </div>
+            st.divider()
+            sub_c1, sub_c2 = st.columns(2)
+            with sub_c1:
+                st.metric("Upfront Cash Depletion", f"{cash_depletion_pct:.0f}%", "Of Liquid Reserves", delta_color="inverse" if cash_depletion_pct > 50 else "normal")
+            with sub_c2:
+                st.metric("Remaining Buffer", f"₹{max(0.0, rem_after):,.0f}", delta="After Purchase", delta_color="normal" if rem_after >= profile.emergency_fund_target else "inverse")
 
-            <div style="margin-top: 1.2rem; font-size: 0.8rem; color: #cbd5e1; line-height: 1.4;">
-                ⚠️ Buying this upfront without simulation risks depleting your safety net if you experience an unexpected salary delay or medical emergency.
-            </div>
-        </div>
-        """)
+            st.warning("⚠️ Buying this upfront without simulation risks depleting your safety net if you experience an unexpected salary delay or medical emergency.")
 
 # ==============================================================================
 # PAGE 2: PARALLEL FUTURES SIMULATOR
 # ==============================================================================
 elif page == "🔮 Parallel Futures Simulator":
-    html("""
-    <h1 class="gradient-header" style="font-size: 2.3rem;">Parallel Financial Futures Engine</h1>
-    <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.8rem;">Deterministic multi-timeline scenario simulation. Detect cash shortfalls and breaking points before committing.</p>
-    """)
+    st.title("🔮 Parallel Financial Futures Engine")
+    st.markdown("Deterministic multi-timeline scenario simulation. Detect cash shortfalls and breaking points before committing.")
 
     # Interactive Simulator Controls
-    with st.container():
+    with st.container(border=True):
         st.markdown("**⚡ Simulation Control Panel & Adverse Shock Matrix**")
         sc_c1, sc_c2, sc_c3, sc_c4 = st.columns(4)
         with sc_c1:
@@ -535,38 +442,33 @@ elif page == "🔮 Parallel Futures Simulator":
     )
     st.plotly_chart(fig_lines, use_container_width=True)
 
-    # 5 Parallel Futures Comparison Cards
+    # 5 Parallel Futures Comparison Cards using Native st.container
     st.subheader("🌌 Future Timelines Breakdown & Resilience Index")
     card_cols = st.columns(5)
     
     for i, (sc_id, sc_data) in enumerate(scenarios.items()):
         with card_cols[i]:
-            risk_class = "danger" if sc_data["risk_level"] in ("HIGH", "CRITICAL") else ("warning" if sc_data["risk_level"] == "MODERATE" else "success")
-            low_color = '#f43f5e' if sc_data['lowest_savings'] < 0 else '#f8fafc'
-            def_color = '#f43f5e' if sc_data['negative_cash_months'] > 0 else '#10b981'
-            
-            html(f"""
-            <div class="fin-card" style="min-height: 290px; padding: 1.1rem; border-top: 3px solid {colors_map[sc_id]};">
-                <div style="font-weight: 700; font-size: 0.92rem; color: #f8fafc; margin-bottom: 0.35rem;">{sc_data['scenario_name']}</div>
-                <span class="badge badge-{risk_class}">{sc_data['risk_level']} RISK</span>
+            with st.container(border=True):
+                st.markdown(f"**{sc_data['scenario_name']}**")
                 
-                <div style="margin-top: 1rem;">
-                    <div style="font-size: 0.72rem; color: #94a3b8; text-transform: uppercase;">Lowest Savings Point:</div>
-                    <div style="font-size: 1.25rem; font-weight: 800; color: {low_color};">
-                        ₹{sc_data['lowest_savings']:,.0f}
-                    </div>
-                </div>
-
-                <div style="margin-top: 0.6rem; font-size: 0.78rem; color: #94a3b8;">
-                    <div>Resilience Score: <b style="color: #f8fafc;">{sc_data['resilience_score']}/100</b></div>
-                    <div>Deficit Months: <b style="color: {def_color};">{sc_data['negative_cash_months']}</b></div>
-                </div>
-
-                <div style="margin-top: 0.8rem; font-size: 0.74rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.6rem;">
-                    {sc_data['breaking_point_reason']}
-                </div>
-            </div>
-            """)
+                # Risk Badge
+                if sc_data["risk_level"] == "LOW":
+                    st.success("● LOW RISK")
+                elif sc_data["risk_level"] == "MODERATE":
+                    st.warning("▲ MODERATE RISK")
+                else:
+                    st.error("■ HIGH RISK")
+                
+                st.metric(
+                    label="Lowest Savings Point",
+                    value=f"₹{sc_data['lowest_savings']:,.0f}",
+                    delta=f"{sc_data['resilience_score']}/100 Resilience",
+                    delta_color="normal" if sc_data['lowest_savings'] >= 0 else "inverse"
+                )
+                
+                st.caption(f"Deficit Months: **{sc_data['negative_cash_months']}**")
+                st.divider()
+                st.caption(sc_data['breaking_point_reason'])
 
     # Detailed Table View
     with st.expander("📋 View Month-by-Month Projection Data Table"):
@@ -590,12 +492,10 @@ elif page == "🔮 Parallel Futures Simulator":
 # PAGE 3: PURCHASE AFFORDABILITY PLANNER
 # ==============================================================================
 elif page == "⚖️ Purchase Affordability Matrix":
-    html("""
-    <h1 class="gradient-header" style="font-size: 2.3rem;">Purchase Affordability Decision Matrix</h1>
-    <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.8rem;">Comprehensive 4-way financial pathway comparison: Cash vs Save-and-Wait vs Alternative vs EMI Financing.</p>
-    """)
+    st.title("⚖️ Purchase Affordability Decision Matrix")
+    st.markdown("Comprehensive 4-way financial pathway comparison: Cash vs Save-and-Wait vs Alternative vs EMI Financing.")
 
-    with st.container():
+    with st.container(border=True):
         p_c1, p_c2, p_c3 = st.columns(3)
         with p_c1:
             p_name = st.text_input("Contemplated Item", value=profile.planned_purchase_name)
@@ -625,78 +525,51 @@ elif page == "⚖️ Purchase Affordability Matrix":
     )
 
     rec_label = eval_result['recommended_option_id'].replace('_', ' ').upper()
-    html(f"""
-    <div class="fin-card" style="border: 2px solid #10b981; background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(13, 20, 36, 0.85) 100%); margin-top: 1rem;">
-        <div style="color: #10b981; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
-            ⭐ Parallelverse Algorithmic Recommendation: {rec_label}
-        </div>
-        <div style="font-size: 1.05rem; color: #f8fafc; font-weight: 600; margin-top: 0.4rem;">
-            {eval_result['verdict_explanation']}
-        </div>
-    </div>
-    """)
+    st.success(f"⭐ **Parallelverse Recommendation: {rec_label}** — {eval_result['verdict_explanation']}")
 
-    # 4 Visual Option Cards
+    # 4 Visual Option Cards using Native st.container
     cols = st.columns(4)
     for i, opt in enumerate(eval_result["options"]):
         with cols[i]:
-            badge_color = "success" if opt["risk_rating"] == "SAFE" else ("warning" if opt["risk_rating"] == "CAUTION" else "danger")
-            is_rec = opt["option_id"] == eval_result["recommended_option_id"]
-            border_style = "border: 2px solid #10b981;" if is_rec else "border: 1px solid rgba(255,255,255,0.08);"
-            rec_tag = '<div style="color: #10b981; font-weight: 800; font-size: 0.75rem; margin-bottom: 0.35rem;">★ BEST FIT CHOICE</div>' if is_rec else ''
-            buf_color = '#10b981' if opt['emergency_buffer_preserved_pct'] >= 100 else '#f59e0b'
-
-            html(f"""
-            <div class="fin-card" style="min-height: 440px; {border_style}">
-                {rec_tag}
-                <div style="font-weight: 700; font-size: 1.05rem; color: #f8fafc;">{opt['option_title']}</div>
-                <div style="margin: 0.6rem 0;">
-                    <span class="badge badge-{badge_color}">{opt['risk_rating']}</span>
-                </div>
+            with st.container(border=True):
+                if opt["option_id"] == eval_result["recommended_option_id"]:
+                    st.caption("⭐ RECOMMENDED CHOICE")
                 
-                <div style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.8rem;">
-                    <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase;">Upfront Cash Required</div>
-                    <div style="font-size: 1.25rem; font-weight: 800; color: #f8fafc;">₹{opt['upfront_cash_required']:,.0f}</div>
-                </div>
-
-                <div style="margin-top: 0.5rem;">
-                    <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase;">Monthly Obligation</div>
-                    <div style="font-size: 1.25rem; font-weight: 800; color: #06b6d4;">₹{opt['monthly_obligation']:,.0f}<span style="font-size: 0.75rem; color: #94a3b8;">/mo</span></div>
-                </div>
-
-                <div style="margin-top: 0.5rem;">
-                    <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase;">Emergency Reserve Retained</div>
-                    <div style="font-size: 1.1rem; font-weight: 700; color: {buf_color};">
-                        {opt['emergency_buffer_preserved_pct']:.0f}% <span style="font-size: 0.75rem; color: #94a3b8;">of safety target</span>
-                    </div>
-                </div>
-
-                <div style="margin-top: 1rem; font-size: 0.76rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.6rem;">
-                    <b>Key Trade-off:</b><br>{opt['key_tradeoff']}
-                </div>
-            </div>
-            """)
+                st.markdown(f"#### {opt['option_title']}")
+                
+                if opt["risk_rating"] == "SAFE":
+                    st.success("SAFE")
+                elif opt["risk_rating"] == "CAUTION":
+                    st.warning("CAUTION")
+                else:
+                    st.error("HIGH RISK")
+                
+                st.metric("Upfront Cash", f"₹{opt['upfront_cash_required']:,.0f}")
+                st.metric("Monthly Obligation", f"₹{opt['monthly_obligation']:,.0f}/mo")
+                st.metric("Emergency Buffer Retained", f"{opt['emergency_buffer_preserved_pct']:.0f}%", delta="Of target")
+                
+                st.divider()
+                st.caption(f"**Key Trade-off:** {opt['key_tradeoff']}")
 
 # ==============================================================================
 # PAGE 4: EMI CALCULATOR
 # ==============================================================================
 elif page == "🧮 Reducing-Balance EMI Engine":
-    html("""
-    <h1 class="gradient-header" style="font-size: 2.3rem;">Precision Reducing-Balance EMI Calculator</h1>
-    <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.8rem;">Financial grade reducing-balance amortization schedules, interest totals reconciliation, and early repayment analysis.</p>
-    """)
+    st.title("🧮 Precision Reducing-Balance EMI Calculator")
+    st.markdown("Financial grade reducing-balance amortization schedules, interest totals reconciliation, and early repayment analysis.")
 
-    col_e1, col_e2, col_e3, col_e4 = st.columns(4)
-    with col_e1:
-        price = st.number_input("Purchase Amount (₹)", min_value=1000.0, value=70000.0, step=5000.0)
-    with col_e2:
-        down = st.number_input("Down Payment (₹)", min_value=0.0, max_value=price-500.0, value=10000.0, step=2000.0)
-    with col_e3:
-        rate = st.number_input("Annual Interest Rate (%)", min_value=0.0, max_value=40.0, value=12.0, step=0.5)
-    with col_e4:
-        tenure = st.number_input("Loan Tenure (Months)", min_value=1, max_value=60, value=12, step=1)
+    with st.container(border=True):
+        col_e1, col_e2, col_e3, col_e4 = st.columns(4)
+        with col_e1:
+            price = st.number_input("Purchase Amount (₹)", min_value=1000.0, value=70000.0, step=5000.0)
+        with col_e2:
+            down = st.number_input("Down Payment (₹)", min_value=0.0, max_value=price-500.0, value=10000.0, step=2000.0)
+        with col_e3:
+            rate = st.number_input("Annual Interest Rate (%)", min_value=0.0, max_value=40.0, value=12.0, step=0.5)
+        with col_e4:
+            tenure = st.number_input("Loan Tenure (Months)", min_value=1, max_value=60, value=12, step=1)
 
-    extra_pay = st.number_input("Optional Monthly Extra Prepayment (₹)", min_value=0.0, value=0.0, step=500.0)
+        extra_pay = st.number_input("Optional Monthly Extra Prepayment (₹)", min_value=0.0, value=0.0, step=500.0)
 
     emi_data = EMICalculator.calculate_emi(
         purchase_price=price,
@@ -706,41 +579,22 @@ elif page == "🧮 Reducing-Balance EMI Engine":
         extra_monthly_payment=extra_pay
     )
 
-    # 4 Financial Result Tiles
+    # 4 Financial Result Tiles using Native st.container
     m1, m2, m3, m4 = st.columns(4)
     with m1:
-        html(f"""
-        <div class="fin-card">
-            <div class="stat-label">💳 Monthly EMI</div>
-            <div class="stat-value" style="color: #10b981;">₹{emi_data['monthly_emi']:,.2f}</div>
-            <div style="font-size: 0.78rem; color: #38bdf8; margin-top: 0.4rem;">For {tenure} months</div>
-        </div>
-        """)
+        with st.container(border=True):
+            st.metric("Monthly EMI", f"₹{emi_data['monthly_emi']:,.2f}", f"For {tenure} months")
     with m2:
-        html(f"""
-        <div class="fin-card">
-            <div class="stat-label">🏷️ Principal Financed</div>
-            <div class="stat-value">₹{emi_data['principal_financed']:,.0f}</div>
-            <div style="font-size: 0.78rem; color: #38bdf8; margin-top: 0.4rem;">Excluding down payment</div>
-        </div>
-        """)
+        with st.container(border=True):
+            st.metric("Principal Financed", f"₹{emi_data['principal_financed']:,.0f}", "Net Loan")
     with m3:
-        int_class = 'stat-warning' if emi_data['total_interest'] > 0 else 'stat-positive'
-        html(f"""
-        <div class="fin-card">
-            <div class="stat-label">🔥 Total Interest Cost</div>
-            <div class="stat-value {int_class}">₹{emi_data['total_interest']:,.2f}</div>
-            <div style="font-size: 0.78rem; color: #38bdf8; margin-top: 0.4rem;">Financing surcharge</div>
-        </div>
-        """)
+        with st.container(border=True):
+            st.metric("Total Interest Cost", f"₹{emi_data['total_interest']:,.2f}", delta_color="inverse")
     with m4:
-        html(f"""
-        <div class="fin-card">
-            <div class="stat-label">💰 Total Repayment</div>
-            <div class="stat-value">₹{emi_data['total_repayment']:,.2f}</div>
-            <div style="font-size: 0.78rem; color: #10b981; margin-top: 0.4rem;">Reconciled to ₹0.00 balance</div>
-        </div>
-        """)
+        with st.container(border=True):
+            st.metric("Total Repayment", f"₹{emi_data['total_repayment']:,.2f}", "Reconciled to ₹0.00")
+
+    st.markdown("---")
 
     # Charts & Schedule Table
     c_pie, c_table = st.columns([1, 1.8])
@@ -780,10 +634,8 @@ elif page == "🧮 Reducing-Balance EMI Engine":
 # PAGE 5: INSTALLMENT TRACKER & REMINDERS
 # ==============================================================================
 elif page == "📅 Installment Tracker & Reminders":
-    html("""
-    <h1 class="gradient-header" style="font-size: 2.3rem;">Installment Tracker & Calendar Reminders</h1>
-    <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.8rem;">Monitor active EMI commitments, update payment statuses, and download one-click <b>RFC 5545 iCalendar (.ics)</b> reminders for your phone.</p>
-    """)
+    st.title("📅 Installment Tracker & Calendar Reminders")
+    st.markdown("Monitor active EMI commitments, update payment statuses, and download one-click **RFC 5545 iCalendar (.ics)** reminders for your phone.")
 
     db = SessionLocal()
     try:
@@ -848,7 +700,7 @@ elif page == "📅 Installment Tracker & Reminders":
                     st.success(f"Plan '{new_name}' created successfully with {new_ten} calendar installments!")
                     st.rerun()
 
-        # Display Active Plans
+        # Display Active Plans using Native st.container
         if not plans:
             st.info("No active plans found. Click 'Create New Installment Commitment' above or seed demo data.")
         else:
@@ -861,76 +713,68 @@ elif page == "📅 Installment Tracker & Reminders":
                 total_c = len(plan.payments)
                 progress_pct = (paid_c / total_c) * 100.0 if total_c > 0 else 0
                 has_overdue = any(p.status == "OVERDUE" for p in plan.payments)
-                border_col = '#f43f5e' if has_overdue else '#10b981'
-                status_txt = 'OVERDUE DETECTED' if has_overdue else 'ACTIVE & ON TRACK'
-                badge_st = 'danger' if has_overdue else 'success'
 
-                html(f"""
-                <div class="fin-card" style="border-left: 5px solid {border_col};">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <span class="badge badge-info">{plan.category}</span>
-                            <span class="badge badge-{badge_st}" style="margin-left: 6px;">{status_txt}</span>
-                            <h3 style="margin: 0.5rem 0 0.2rem 0; color: #f8fafc; font-size: 1.3rem;">{plan.purchase_name}</h3>
-                            <div style="color: #94a3b8; font-size: 0.85rem;">
-                                Financed: <b>₹{plan.principal_financed:,.0f}</b> | 
-                                Monthly EMI: <b style="color: #10b981;">₹{plan.monthly_emi:,.2f}</b> | 
-                                Due Day: <b>{plan.due_day}th of every month</b>
-                            </div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase;">Repayment Progress</div>
-                            <div style="font-size: 1.4rem; font-weight: 800; color: #10b981;">{paid_c} / {total_c} Paid</div>
-                            <div style="font-size: 0.8rem; color: #94a3b8;">({progress_pct:.0f}% Completed)</div>
-                        </div>
-                    </div>
-                </div>
-                """)
+                with st.container(border=True):
+                    c_head1, c_head2 = st.columns([3, 1])
+                    with c_head1:
+                        st.caption(f"{plan.category.upper()} • DUE ON {plan.due_day}th OF EVERY MONTH")
+                        st.subheader(plan.purchase_name)
+                        st.write(f"Financed: **₹{plan.principal_financed:,.0f}** | Monthly EMI: **₹{plan.monthly_emi:,.2f}**")
+                    with c_head2:
+                        if has_overdue:
+                            st.error("⚠️ OVERDUE DETECTED")
+                        else:
+                            st.success("● ACTIVE & ON TRACK")
+                        st.metric("Repayment Progress", f"{paid_c} / {total_c} Paid", f"{progress_pct:.0f}% Done")
 
-                st.progress(progress_pct / 100.0)
+                    st.progress(progress_pct / 100.0)
 
-                b_col1, b_col2, _ = st.columns([1.5, 1, 2])
-                with b_col1:
-                    ics_content = ReminderService.generate_ics_calendar(plan.purchase_name, plan.payments)
-                    st.download_button(
-                        label="📅 Download Calendar (.ICS) Reminders",
-                        data=ics_content,
-                        file_name=f"{plan.purchase_name.replace(' ', '_')}_Reminders.ics",
-                        mime="text/calendar",
-                        key=f"ics_btn_{plan.id}"
-                    )
-                with b_col2:
-                    if st.button("🗑️ Delete Commitment", key=f"del_plan_{plan.id}"):
-                        db.delete(plan)
-                        db.commit()
-                        st.warning("Commitment deleted.")
-                        st.rerun()
+                    b_col1, b_col2, _ = st.columns([1.5, 1, 2])
+                    with b_col1:
+                        ics_content = ReminderService.generate_ics_calendar(plan.purchase_name, plan.payments)
+                        st.download_button(
+                            label="📅 Download Calendar (.ICS) Reminders",
+                            data=ics_content,
+                            file_name=f"{plan.purchase_name.replace(' ', '_')}_Reminders.ics",
+                            mime="text/calendar",
+                            key=f"ics_btn_{plan.id}"
+                        )
+                    with b_col2:
+                        if st.button("🗑️ Delete Commitment", key=f"del_plan_{plan.id}"):
+                            db.delete(plan)
+                            db.commit()
+                            st.warning("Commitment deleted.")
+                            st.rerun()
 
-                with st.expander(f"👁️ View & Mark Monthly Payments ({plan.purchase_name})"):
-                    for p in plan.payments:
-                        p_c1, p_c2, p_c3, p_c4, p_c5 = st.columns([1, 1.5, 1.5, 1.5, 1.5])
-                        with p_c1:
-                            st.write(f"**#{p.installment_number}**")
-                        with p_c2:
-                            st.write(f"Due: **{p.due_date.strftime('%d %b %Y')}**")
-                        with p_c3:
-                            st.write(f"Amount: **₹{p.emi_amount:,.2f}**")
-                        with p_c4:
-                            st_pill = "success" if p.status == 'PAID' else ('danger' if p.status == 'OVERDUE' else 'warning')
-                            html(f"<span class='badge badge-{st_pill}'>{p.status}</span>")
-                        with p_c5:
-                            if p.status != "PAID":
-                                if st.button("Mark Paid", key=f"pay_btn_{p.id}"):
-                                    p.status = "PAID"
-                                    p.paid_at = datetime.utcnow()
-                                    db.commit()
-                                    st.rerun()
-                            else:
-                                if st.button("Revert", key=f"rev_btn_{p.id}"):
-                                    p.status = "PENDING"
-                                    p.paid_at = None
-                                    db.commit()
-                                    st.rerun()
+                    with st.expander(f"👁️ View & Mark Monthly Payments ({plan.purchase_name})"):
+                        for p in plan.payments:
+                            p_c1, p_c2, p_c3, p_c4, p_c5 = st.columns([1, 1.5, 1.5, 1.5, 1.5])
+                            with p_c1:
+                                st.write(f"**#{p.installment_number}**")
+                            with p_c2:
+                                st.write(f"Due: **{p.due_date.strftime('%d %b %Y')}**")
+                            with p_c3:
+                                st.write(f"Amount: **₹{p.emi_amount:,.2f}**")
+                            with p_c4:
+                                if p.status == 'PAID':
+                                    st.success("PAID")
+                                elif p.status == 'OVERDUE':
+                                    st.error("OVERDUE")
+                                else:
+                                    st.warning("PENDING")
+                            with p_c5:
+                                if p.status != "PAID":
+                                    if st.button("Mark Paid", key=f"pay_btn_{p.id}"):
+                                        p.status = "PAID"
+                                        p.paid_at = datetime.utcnow()
+                                        db.commit()
+                                        st.rerun()
+                                else:
+                                    if st.button("Revert", key=f"rev_btn_{p.id}"):
+                                        p.status = "PENDING"
+                                        p.paid_at = None
+                                        db.commit()
+                                        st.rerun()
 
     finally:
         db.close()
@@ -939,10 +783,8 @@ elif page == "📅 Installment Tracker & Reminders":
 # PAGE 6: FINANCIAL PROFILE
 # ==============================================================================
 elif page == "👤 Financial Profile & Presets":
-    html("""
-    <h1 class="gradient-header" style="font-size: 2.3rem;">Financial Profile & Scenario Parameters</h1>
-    <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 1.8rem;">Configure your actual baseline finances or test custom financial scenarios. Persists automatically to SQLite.</p>
-    """)
+    st.title("👤 Financial Profile & Scenario Parameters")
+    st.markdown("Configure your actual baseline finances or test custom financial scenarios. Persists automatically to SQLite.")
 
     db = SessionLocal()
     try:
