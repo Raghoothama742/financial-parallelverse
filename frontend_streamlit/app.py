@@ -902,7 +902,19 @@ elif page == "🔮 Parallel Futures Simulator":
             unexp_month = st.slider("Emergency Month", min_value=1, max_value=dur, value=3)
         with sc_c4:
             delay_start = st.slider("Salary Delay Month", min_value=1, max_value=dur, value=2)
-            inflation_pct = st.slider("Cost Inflation (%)", min_value=0, max_value=40, value=15, step=5)
+            inflation_pct = st.slider("Initial Cost Inflation (%)", min_value=0, max_value=40, value=15, step=5)
+
+    with st.expander("Advanced Parallel Futures Parameters", expanded=True):
+        adv1, adv2, adv3 = st.columns(3)
+        with adv1:
+            income_reduction_pct = st.slider("Income reduction in worst case (%)", 0, 100, 25, step=5)
+            recurring_emergency_cost = st.number_input("Recurring shock cost (₹/month)", min_value=0.0, value=5000.0, step=1000.0)
+        with adv2:
+            recurring_cost_start_month = st.slider("Recurring cost starts in month", min_value=1, max_value=dur, value=min(3, dur))
+            monthly_inflation_pct = st.slider("Additional monthly expense growth (%)", min_value=0.0, max_value=10.0, value=1.0, step=0.5)
+        with adv3:
+            investment_return_pct = st.slider("Annual savings return assumption (%)", min_value=-20.0, max_value=20.0, value=0.0, step=0.5)
+            st.caption("Returns are a simplified assumption, not a guaranteed or market-linked forecast.")
 
     # Run Simulation Engine
     sim_results = ScenarioEngine.simulate_all_scenarios(
@@ -924,7 +936,12 @@ elif page == "🔮 Parallel Futures Simulator":
         unexpected_expense_month=unexp_month,
         salary_delay_months=1,
         salary_delay_start_month=delay_start,
-        expense_increase_pct=inflation_pct
+        expense_increase_pct=inflation_pct,
+        income_reduction_pct=income_reduction_pct,
+        recurring_emergency_cost=recurring_emergency_cost,
+        recurring_cost_start_month=recurring_cost_start_month,
+        monthly_inflation_pct=monthly_inflation_pct,
+        investment_return_pct=investment_return_pct
     )
 
     scenarios = sim_results["scenarios"]
