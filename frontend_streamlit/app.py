@@ -52,6 +52,19 @@ if theme == "☀️ Pure White":
     hero_bg = "linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%)"
     hero_border = "1px solid rgba(0, 0, 0, 0.1)"
     hero_title_grad = "linear-gradient(135deg, #0f172a 10%, #0284c7 50%, #059669 100%)"
+    nav_item_bg = "rgba(0, 0, 0, 0.03)"
+    nav_item_border = "1px solid rgba(0, 0, 0, 0.08)"
+    nav_item_hover_bg = "rgba(2, 132, 199, 0.08)"
+    nav_item_active_bg = "linear-gradient(135deg, rgba(2, 132, 199, 0.12) 0%, rgba(16, 185, 129, 0.12) 100%)"
+    nav_item_active_border = "1px solid #0284c7"
+    nav_item_text = "#1e293b"
+    nav_item_active_text = "#0369a1"
+    sidebar_divider = "linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.12), transparent)"
+    persona_btn_bg = "#ffffff"
+    persona_btn_border = "1px solid rgba(0, 0, 0, 0.12)"
+    persona_btn_text = "#0f172a"
+    hud_bg = "rgba(255, 255, 255, 0.9)"
+    hud_border = "1px solid rgba(0, 0, 0, 0.1)"
 elif theme == "⚡ Slate Modern":
     # Modern Executive Slate Theme
     bg_style = "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)"
@@ -67,6 +80,19 @@ elif theme == "⚡ Slate Modern":
     hero_bg = "linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%)"
     hero_border = "1px solid rgba(255, 255, 255, 0.12)"
     hero_title_grad = "linear-gradient(135deg, #ffffff 10%, #38bdf8 50%, #34d399 100%)"
+    nav_item_bg = "rgba(255, 255, 255, 0.03)"
+    nav_item_border = "1px solid rgba(255, 255, 255, 0.08)"
+    nav_item_hover_bg = "rgba(56, 189, 248, 0.12)"
+    nav_item_active_bg = "linear-gradient(135deg, rgba(56, 189, 248, 0.18) 0%, rgba(99, 102, 241, 0.22) 100%)"
+    nav_item_active_border = "1px solid #38bdf8"
+    nav_item_text = "#e2e8f0"
+    nav_item_active_text = "#38bdf8"
+    sidebar_divider = "linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.25), transparent)"
+    persona_btn_bg = "rgba(30, 41, 59, 0.9)"
+    persona_btn_border = "1px solid rgba(255, 255, 255, 0.12)"
+    persona_btn_text = "#f8fafc"
+    hud_bg = "linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%)"
+    hud_border = "1px solid rgba(255, 255, 255, 0.1)"
 else:
     # 🌌 Dark Cyber Theme (Default)
     bg_style = "radial-gradient(circle at 15% 15%, #0e172a 0%, #080c17 45%, #050811 100%)"
@@ -82,6 +108,19 @@ else:
     hero_bg = "linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%)"
     hero_border = "1px solid rgba(255, 255, 255, 0.1)"
     hero_title_grad = "linear-gradient(135deg, #ffffff 10%, #38bdf8 45%, #a855f7 75%, #34d399 100%)"
+    nav_item_bg = "rgba(255, 255, 255, 0.02)"
+    nav_item_border = "1px solid rgba(255, 255, 255, 0.06)"
+    nav_item_hover_bg = "rgba(56, 189, 248, 0.15)"
+    nav_item_active_bg = "linear-gradient(135deg, rgba(14, 165, 233, 0.22) 0%, rgba(139, 92, 246, 0.25) 100%)"
+    nav_item_active_border = "1px solid #38bdf8"
+    nav_item_text = "#f8fafc"
+    nav_item_active_text = "#38bdf8"
+    sidebar_divider = "linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.3), transparent)"
+    persona_btn_bg = "rgba(19, 29, 49, 0.8)"
+    persona_btn_border = "1px solid rgba(56, 189, 248, 0.3)"
+    persona_btn_text = "#f8fafc"
+    hud_bg = "linear-gradient(135deg, rgba(19, 29, 49, 0.85) 0%, rgba(13, 20, 36, 0.95) 100%)"
+    hud_border = "1px solid rgba(56, 189, 248, 0.2)"
 
 st.html(f"""
 <style>
@@ -99,6 +138,153 @@ st.html(f"""
     /* Global Typography */
     h1, h2, h3, h4, h5, p, span, div {{
         color: {text_main};
+    }}
+
+    /* Futuristic glowing divider replacing retro HR */
+    hr {{
+        border: none !important;
+        height: 1px !important;
+        background: {sidebar_divider} !important;
+        margin: 1.2rem 0 !important;
+    }}
+
+    /* ========================================================================= */
+    /* ULTRA-MODERN MISSION CONTROL NAVIGATION MENU STYLING (NO 1990s DOTS!)     */
+    /* ========================================================================= */
+    
+    /* Kill default 1990s circular radio buttons */
+    div[data-testid="stRadio"] label > div:first-child {{
+        display: none !important;
+    }}
+
+    /* Sidebar Navigation Menu */
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] {{
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 7px !important;
+    }}
+
+    /* Main-page Horizontal Segmented Radios */
+    div[data-testid="stRadio"] div[role="radiogroup"] {{
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+    }}
+
+    /* Modern floating navigation card */
+    div[data-testid="stRadio"] label {{
+        display: flex !important;
+        align-items: center !important;
+        padding: 0.72rem 1.05rem !important;
+        margin: 0 !important;
+        border-radius: 13px !important;
+        background: {nav_item_bg} !important;
+        border: {nav_item_border} !important;
+        transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        cursor: pointer !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }}
+
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label {{
+        width: 100% !important;
+    }}
+
+    /* Hover elevation & glow */
+    div[data-testid="stRadio"] label:hover {{
+        background: {nav_item_hover_bg} !important;
+        border-color: rgba(56, 189, 248, 0.45) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 15px rgba(56, 189, 248, 0.15) !important;
+    }}
+
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] label:hover {{
+        transform: translateX(4px) !important;
+    }}
+
+    /* Active / Selected Tab */
+    div[data-testid="stRadio"] label:has(input:checked),
+    div[data-testid="stRadio"] label[aria-checked="true"],
+    div[data-testid="stRadio"] label[data-checked="true"] {{
+        background: {nav_item_active_bg} !important;
+        border: {nav_item_active_border} !important;
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.22), inset 0 0 12px rgba(56, 189, 248, 0.08) !important;
+    }}
+
+    /* Left glowing neon indicator bar on active item */
+    div[data-testid="stRadio"] label:has(input:checked)::before,
+    div[data-testid="stRadio"] label[aria-checked="true"]::before {{
+        content: '' !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        width: 4px !important;
+        background: linear-gradient(180deg, #38bdf8 0%, #10b981 100%) !important;
+        border-radius: 4px 0 0 4px !important;
+    }}
+
+    /* Navigation text */
+    div[data-testid="stRadio"] label p {{
+        font-size: 0.88rem !important;
+        font-weight: 700 !important;
+        color: {nav_item_text} !important;
+        margin: 0 !important;
+        letter-spacing: -0.01em !important;
+        transition: color 0.2s ease !important;
+    }}
+
+    div[data-testid="stRadio"] label:has(input:checked) p,
+    div[data-testid="stRadio"] label[aria-checked="true"] p {{
+        color: {nav_item_active_text} !important;
+        font-weight: 800 !important;
+    }}
+
+    /* Persona Switcher Buttons in Sidebar */
+    section[data-testid="stSidebar"] div[data-testid="column"] .stButton>button {{
+        background: {persona_btn_bg} !important;
+        border: {persona_btn_border} !important;
+        color: {persona_btn_text} !important;
+        font-weight: 700 !important;
+        font-size: 0.78rem !important;
+        padding: 0.65rem 0.5rem !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        transition: all 0.22s ease !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }}
+
+    section[data-testid="stSidebar"] div[data-testid="column"] .stButton>button:hover {{
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%) !important;
+        border-color: #38bdf8 !important;
+        color: #38bdf8 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 18px rgba(56, 189, 248, 0.25) !important;
+    }}
+
+    /* Selectbox Styling */
+    div[data-baseweb="select"] > div {{
+        background: {card_bg} !important;
+        border: {card_border} !important;
+        border-radius: 12px !important;
+        color: {text_main} !important;
+    }}
+
+    /* Pulsing animations */
+    @keyframes pulse-dot {{
+        0% {{ transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }}
+        70% {{ transform: scale(1.05); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }}
+        100% {{ transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }}
+    }}
+
+    @keyframes pulse-radar {{
+        0% {{ transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }}
+        70% {{ transform: scale(1.05); box-shadow: 0 0 0 8px rgba(56, 189, 248, 0); }}
+        100% {{ transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }}
     }}
 
     /* Hero Mesh Banner */
@@ -348,19 +534,34 @@ def get_user_profile():
 # ==============================================================================
 with st.sidebar:
     st.html(f"""
-    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 1.2rem;">
-        <div style="width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #10b981 100%); display: flex; align-items: center; justify-content: center; font-size: 1.7rem; box-shadow: 0 4px 18px rgba(59, 130, 246, 0.4);">
-            🌌
-        </div>
-        <div>
-            <div style="font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em;">Parallelverse</div>
-            <div style="font-size: 0.72rem; color: #06b6d4; font-weight: 700; text-transform: uppercase;">FinTech Simulation</div>
+    <div style="background: {card_bg}; border: {card_border}; border-radius: 18px; padding: 1.1rem 1.2rem; margin-bottom: 1.2rem; box-shadow: {card_shadow}; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #38bdf8, #818cf8, #10b981);"></div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #0284c7 0%, #6366f1 50%, #10b981 100%); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35);">
+                🌌
+            </div>
+            <div>
+                <div style="font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2;">Parallelverse</div>
+                <div style="font-size: 0.7rem; color: #06b6d4; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 5px;">
+                    <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #10b981; animation: pulse-dot 2s infinite;"></span>
+                    FinTech Cockpit
+                </div>
+            </div>
         </div>
     </div>
     """)
 
-    # 3-Mode Theme Selector
-    st.markdown("<p style='font-size: 0.72rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;'>🎨 Visual Theme Mode</p>", unsafe_allow_html=True)
+    # 3-Mode Theme Selector with Modern Capsule Header
+    st.html(f"""
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem; padding: 0 4px;">
+        <span style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: {text_muted};">
+            🎨 VISUAL THEME
+        </span>
+        <span style="font-size: 0.65rem; background: rgba(56, 189, 248, 0.12); color: #38bdf8; padding: 2px 8px; border-radius: 9999px; font-weight: 700;">
+            3 MODES
+        </span>
+    </div>
+    """)
     selected_theme = st.selectbox(
         "Theme Mode",
         ["🌌 Dark Cyber", "☀️ Pure White", "⚡ Slate Modern"],
@@ -371,12 +572,23 @@ with st.sidebar:
         st.session_state["theme_mode"] = selected_theme
         st.rerun()
 
-    st.markdown("---")
+    # Sleek High-Tech Mission Control Header
+    st.html(f"""
+    <div style="margin: 1.2rem 0 0.6rem 0; padding: 0 4px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981; animation: pulse-dot 2s infinite;"></span>
+            <span style="font-size: 0.76rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: {text_muted};">
+                MISSION CONTROL
+            </span>
+        </div>
+        <span style="font-size: 0.64rem; background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 2px 8px; border-radius: 9999px; font-weight: 800; border: 1px solid rgba(16, 185, 129, 0.3);">
+            ONLINE
+        </span>
+    </div>
+    """)
 
-    # Advanced Navigation Menu with Groups
-    st.markdown("<p style='font-size: 0.72rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;'>🧭 Mission Control</p>", unsafe_allow_html=True)
     page = st.radio(
-        "NAVIGATION MENU",
+        "MISSION CONTROL NAVIGATION",
         [
             "📊 Executive Dashboard",
             "🔮 Parallel Futures Simulator",
@@ -389,11 +601,19 @@ with st.sidebar:
         label_visibility="collapsed"
     )
 
-    st.markdown("---")
-    st.markdown("<p style='font-size: 0.72rem; color: #94a3b8; font-weight: 800; text-transform: uppercase;'>⚡ Instant Persona Switcher</p>", unsafe_allow_html=True)
+    # Sleek Persona Switcher Section
+    st.html(f"""
+    <div style="margin: 1.2rem 0 0.5rem 0; padding: 0 4px; display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: {text_muted};">
+            ⚡ INSTANT PERSONA
+        </span>
+        <span style="font-size: 0.65rem; color: #38bdf8; font-weight: 700;">PRESETS</span>
+    </div>
+    """)
+
     c_p1, c_p2 = st.columns(2)
     with c_p1:
-        if st.button("🎓 Student (₹25k)", use_container_width=True):
+        if st.button("🎓 Student\n₹25k/mo", use_container_width=True):
             db = SessionLocal()
             p = db.query(FinancialProfile).first()
             p.full_name = "Rohan Verma (Student)"
@@ -408,7 +628,7 @@ with st.sidebar:
             db.commit()
             st.rerun()
     with c_p2:
-        if st.button("💼 Techie (₹75k)", use_container_width=True):
+        if st.button("💼 Techie\n₹75k/mo", use_container_width=True):
             db = SessionLocal()
             p = db.query(FinancialProfile).first()
             p.full_name = "Alex Johnson (Techie)"
@@ -423,7 +643,6 @@ with st.sidebar:
             db.commit()
             st.rerun()
 
-    st.markdown("---")
     profile = get_user_profile()
     metrics = FinancialEngine.calculate_profile_metrics(
         monthly_income=profile.monthly_income,
@@ -434,30 +653,72 @@ with st.sidebar:
         emergency_fund_target=profile.emergency_fund_target
     )
 
+    runway_pct = min(100, int((metrics['months_of_runway'] / 6.0) * 100))
+    runway_bar_col = "#10b981" if metrics['months_of_runway'] >= 3 else "#f59e0b"
+
+    # Cyber Active Persona Profile Card
     st.html(f"""
-    <div style="background: rgba(125, 125, 125, 0.06); border: {card_border}; border-radius: 14px; padding: 1rem; font-size: 0.82rem;">
-        <div style="color: #06b6d4; font-size: 0.72rem; font-weight: 800; text-transform: uppercase;">Active Persona Profile</div>
-        <div style="font-weight: 800; font-size: 1rem; margin: 0.2rem 0 0.6rem 0;">{profile.full_name}</div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+    <div style="background: {card_bg}; border: {card_border}; border-radius: 16px; padding: 1.1rem; font-size: 0.82rem; margin-top: 1.2rem; box-shadow: {card_shadow}; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #10b981, #06b6d4, #8b5cf6);"></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="color: #06b6d4; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">ACTIVE PERSONA</span>
+            <span style="font-size: 0.65rem; background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 2px 7px; border-radius: 9999px; font-weight: 800;">VERIFIED</span>
+        </div>
+        <div style="font-weight: 800; font-size: 1.05rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 8px;">
+            <div style="width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, #38bdf8, #818cf8); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; color: #041421;">
+                {profile.full_name[0]}
+            </div>
+            <span>{profile.full_name}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
             <span style="color: {text_muted};">Monthly Inflow:</span>
             <span style="font-weight: 800;">₹{profile.monthly_income:,.0f}</span>
         </div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
             <span style="color: {text_muted};">Liquid Reserve:</span>
             <span style="color: #10b981; font-weight: 800;">₹{profile.current_savings:,.0f}</span>
         </div>
-        <div style="display: flex; justify-content: space-between;">
-            <span style="color: {text_muted};">Net Monthly Surplus:</span>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem;">
+            <span style="color: {text_muted};">Monthly Surplus:</span>
             <span style="color: {'#10b981' if metrics['free_cash_flow'] >= 0 else '#f43f5e'}; font-weight: 800;">₹{metrics['free_cash_flow']:,.0f}</span>
         </div>
+        <div style="margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid rgba(255, 255, 255, 0.06);">
+            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 4px;">
+                <span style="color: {text_muted};">Runway Security:</span>
+                <span style="font-weight: 800; color: {runway_bar_col};">{metrics['months_of_runway']:.1f} Months</span>
+            </div>
+            <div style="width: 100%; height: 5px; background: rgba(125, 125, 125, 0.15); border-radius: 9999px; overflow: hidden;">
+                <div style="width: {runway_pct}%; height: 100%; background: {runway_bar_col}; border-radius: 9999px;"></div>
+            </div>
+        </div>
     </div>
-    <div style="margin-top: 1.5rem; text-align: center; font-size: 0.72rem; color: {text_muted};">
-        🛡️ Track: The Vampire's Ledger<br>Hack-o-Ween PES University &bull; Dark_Knights
+    <div style="margin-top: 1.2rem; text-align: center; font-size: 0.72rem; color: {text_muted};">
+        🛡️ Track: <b>The Vampire's Ledger (FinTech)</b><br>Hack-o-Ween PESU &bull; Team Dark_Knights
     </div>
     """)
 
-# Top Status Indicators
-st.caption(f"🟢 **Deterministic Financial Parallelverse Engine** | Active Mode: **{theme}** | API :8000 | RFC 5545 iCalendar Enabled")
+# Ultra-Modern Mission Control HUD Telemetry Banner
+st.html(f"""
+<div style="background: {hud_bg}; border: {hud_border}; border-radius: 14px; padding: 0.7rem 1.25rem; margin-bottom: 1.75rem; box-shadow: {card_shadow}; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #10b981; animation: pulse-dot 2s infinite;"></span>
+        <span style="font-weight: 800; font-size: 0.82rem; letter-spacing: 0.03em;">MISSION CONTROL // FINANCIAL PARALLELVERSE</span>
+        <span style="font-size: 0.75rem; color: {text_muted}; margin-left: 4px;">Core v2.4 (Deterministic Engine)</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px; font-size: 0.75rem;">
+        <span style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); padding: 2px 9px; border-radius: 9999px; font-weight: 800;">
+            ● 5 TIMELINES SYNCED
+        </span>
+        <span style="color: {text_muted};">Mode: <b style="color: {text_main};">{theme}</b></span>
+        <span style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 2px 8px; border-radius: 6px; font-weight: 800;">
+            FASTAPI :8000
+        </span>
+        <span style="background: rgba(168, 85, 247, 0.15); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.3); padding: 2px 8px; border-radius: 6px; font-weight: 800;">
+            RFC 5545 iCAL
+        </span>
+    </div>
+</div>
+""")
 
 # ==============================================================================
 # PAGE 1: EXECUTIVE DASHBOARD
