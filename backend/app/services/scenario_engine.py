@@ -23,7 +23,12 @@ class ScenarioEngine:
         unexpected_expense_month: int = 3,
         salary_delay_months: int = 1,
         salary_delay_start_month: int = 2,
-        expense_increase_pct: float = 15.0
+        expense_increase_pct: float = 15.0,
+        income_reduction_pct: float = 25.0,
+        recurring_emergency_cost: float = 5000.0,
+        recurring_cost_start_month: int = 3,
+        monthly_inflation_pct: float = 1.0,
+        investment_return_pct: float = 0.0
     ) -> Dict[str, Any]:
         """
         Executes deterministic multi-timeline financial simulation across:
@@ -50,7 +55,10 @@ class ScenarioEngine:
             assumptions: List[str],
             has_unexpected_expense: bool = False,
             has_salary_delay: bool = False,
-            expense_multiplier: float = 1.0
+            expense_multiplier: float = 1.0,
+            has_income_reduction: bool = False,
+            has_recurring_cost: bool = False,
+            grows_expenses_monthly: bool = False
         ) -> Dict[str, Any]:
             timeline: List[Dict[str, Any]] = []
             current_bal = current_savings
@@ -72,6 +80,8 @@ class ScenarioEngine:
                 
                 # 1. Income calculation
                 inc = monthly_income
+                if has_income_reduction:
+                    inc *= (1.0 - income_reduction_pct / 100.0)
                 if has_salary_delay and m == salary_delay_start_month:
                     # Salary delayed!
                     inc = 0.0
@@ -83,8 +93,10 @@ class ScenarioEngine:
                     inc += delayed_pay_in_month[m]
 
                 # 2. Expenses with inflation/multiplier
-                ess_exp = round_curr(essential_expenses * expense_multiplier)
-                disc_exp = round_curr(discretionary_expenses * expense_multiplier)
+                monthly_growth = (1.0 + monthly_inflation_pct / 100.0) ** (m - 1) if grows_expenses_monthly else 1.0
+                ess_exp = round_curr(essential_expenses * expense_multiplier * monthly_growth)
+                disc_exp = round_curr(discretionary_expenses * expense_multiplier * monthly_growth)
+                recurring_cost = recurring_emergency_cost if has_recurring_cost and m >= recurring_cost_start_month else 0.0
                 exist_emi = round_curr(existing_debt_emi)
 
                 # 3. Purchase payment
@@ -108,8 +120,9 @@ class ScenarioEngine:
                     unexp = unexpected_expense_amount
 
                 # 5. Outflows & Balances
-                total_outflows = round_curr(ess_exp + disc_exp + exist_emi + purch_pay + unexp)
-                net_cash_flow = round_curr(inc - total_outflows)
+                total_outflows = round_curr(ess_exp + disc_exp + exist_emi + purch_pay + unexp + recurring_cost)
+                investment_growth = opening_savings * (investment_return_pct / 100.0) / 12.0 if opening_savings > 0 else 0.0
+                net_cash_flow = round_curr(inc - total_outflows + investment_growth)
                 closing_savings = round_curr(opening_savings + net_cash_flow)
                 current_bal = closing_savings
 
@@ -231,7 +244,8 @@ class ScenarioEngine:
             scenario_name="Cost of Living Inflation (+15%)",
             description=f"Routine living and discretionary expenses climb by {expense_increase_pct:.0f}%.",
             assumptions=[f"Essential & discretionary outlays elevated by {expense_increase_pct:.0f}% every month", "Salary remains fixed"],
-            expense_multiplier=1.0 + (expense_increase_pct / 100.0)
+            expense_multiplier=1.0 + (expense_increase_pct / 100.0),
+            grows_expenses_monthly=True
         )
 
         # 5. Combined Adverse Scenario
@@ -242,11 +256,16 @@ class ScenarioEngine:
             assumptions=[
                 f"₹{unexpected_expense_amount:,.0f} emergency in Month {unexpected_expense_month}",
                 f"Salary delayed by {salary_delay_months} month(s) starting Month {salary_delay_start_month}",
-                f"Expenses inflated by {expense_increase_pct:.0f}%"
+                f"Expenses inflated initially by {expense_increase_pct:.0f}% plus {monthly_inflation_pct:.1f}% monthly growth",
+                f"Income reduced by {income_reduction_pct:.0f}% after salary delay",
+                f"Recurring emergency cost ₹{recurring_emergency_cost:,.0f}/month from Month {recurring_cost_start_month}"
             ],
             has_unexpected_expense=True,
             has_salary_delay=True,
-            expense_multiplier=1.0 + (expense_increase_pct / 100.0)
+            expense_multiplier=1.0 + (expense_increase_pct / 100.0),
+            has_income_reduction=True,
+            has_recurring_cost=True,
+            grows_expenses_monthly=True
         )
 
         scenarios = {
