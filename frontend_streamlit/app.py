@@ -30,193 +30,196 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# WORLD-CLASS FINTECH SAAS DESIGN SYSTEM (VIBRANT & COLORFUL)
+# 🎨 3-MODE THEME ENGINE: DARK CYBER / PURE WHITE / SLATE MODERN
 # ==============================================================================
-st.html("""
+if "theme_mode" not in st.session_state:
+    st.session_state["theme_mode"] = "🌌 Dark Cyber"
+
+theme = st.session_state["theme_mode"]
+
+if theme == "☀️ Pure White":
+    # Clean FinTech Ivory / White Theme
+    bg_style = "linear-gradient(135deg, #f8fafc 0%, #edf2f7 50%, #f1f5f9 100%)"
+    text_main = "#0f172a"
+    text_muted = "#475569"
+    card_bg = "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)"
+    card_border = "1px solid rgba(0, 0, 0, 0.09)"
+    card_shadow = "0 8px 24px rgba(0, 0, 0, 0.06)"
+    sidebar_bg = "#f1f5f9"
+    chart_bg = "#ffffff"
+    chart_font = "#0f172a"
+    chart_grid = "rgba(0, 0, 0, 0.08)"
+    hero_bg = "linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%)"
+    hero_border = "1px solid rgba(0, 0, 0, 0.1)"
+    hero_title_grad = "linear-gradient(135deg, #0f172a 10%, #0284c7 50%, #059669 100%)"
+elif theme == "⚡ Slate Modern":
+    # Modern Executive Slate Theme
+    bg_style = "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)"
+    text_main = "#f8fafc"
+    text_muted = "#94a3b8"
+    card_bg = "linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%)"
+    card_border = "1px solid rgba(255, 255, 255, 0.1)"
+    card_shadow = "0 10px 30px rgba(0, 0, 0, 0.4)"
+    sidebar_bg = "#0b1120"
+    chart_bg = "#1e293b"
+    chart_font = "#f8fafc"
+    chart_grid = "rgba(255, 255, 255, 0.08)"
+    hero_bg = "linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%)"
+    hero_border = "1px solid rgba(255, 255, 255, 0.12)"
+    hero_title_grad = "linear-gradient(135deg, #ffffff 10%, #38bdf8 50%, #34d399 100%)"
+else:
+    # 🌌 Dark Cyber Theme (Default)
+    bg_style = "radial-gradient(circle at 15% 15%, #0e172a 0%, #080c17 45%, #050811 100%)"
+    text_main = "#f8fafc"
+    text_muted = "#94a3b8"
+    card_bg = "linear-gradient(135deg, rgba(19, 29, 49, 0.8) 0%, rgba(13, 20, 36, 0.9) 100%)"
+    card_border = "1px solid rgba(255, 255, 255, 0.08)"
+    card_shadow = "0 10px 30px rgba(0, 0, 0, 0.4)"
+    sidebar_bg = "#090e1a"
+    chart_bg = "#0c1220"
+    chart_font = "#f8fafc"
+    chart_grid = "rgba(255, 255, 255, 0.06)"
+    hero_bg = "linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%)"
+    hero_border = "1px solid rgba(255, 255, 255, 0.1)"
+    hero_title_grad = "linear-gradient(135deg, #ffffff 10%, #38bdf8 45%, #a855f7 75%, #34d399 100%)"
+
+st.html(f"""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,700&display=swap');
 
-    /* Global Base */
-    html, body, [class*="css"] {
+    html, body, [class*="css"] {{
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
-    }
+    }}
 
-    .stApp {
-        background: radial-gradient(circle at 15% 15%, #0e172a 0%, #080c17 45%, #050811 100%) !important;
-        color: #f8fafc !important;
-    }
+    .stApp {{
+        background: {bg_style} !important;
+        color: {text_main} !important;
+    }}
 
-    /* Vibrant Mesh Gradient Hero */
-    .hero-container {
-        background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Global Typography */
+    h1, h2, h3, h4, h5, p, span, div {{
+        color: {text_main};
+    }}
+
+    /* Hero Mesh Banner */
+    .hero-container {{
+        background: {hero_bg};
+        border: {hero_border};
         border-radius: 24px;
-        padding: 2.5rem 2.8rem;
+        padding: 2.2rem 2.6rem;
         margin-bottom: 2rem;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
+        box-shadow: {card_shadow};
+    }}
 
-    .hero-container::before {
-        content: '';
-        position: absolute;
-        top: -60px;
-        right: -60px;
-        width: 320px;
-        height: 320px;
-        background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(6, 182, 212, 0.2) 40%, transparent 70%);
-        filter: blur(40px);
-        pointer-events: none;
-    }
-
-    .hero-container::after {
-        content: '';
-        position: absolute;
-        bottom: -60px;
-        left: 20%;
-        width: 340px;
-        height: 340px;
-        background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, rgba(244, 63, 94, 0.15) 50%, transparent 70%);
-        filter: blur(50px);
-        pointer-events: none;
-    }
-
-    .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: linear-gradient(90deg, rgba(16, 185, 129, 0.18) 0%, rgba(6, 182, 212, 0.18) 100%);
-        border: 1px solid rgba(16, 185, 129, 0.4);
-        padding: 0.35rem 0.9rem;
-        border-radius: 9999px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: #34d399;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        margin-bottom: 1rem;
-    }
-
-    .hero-title {
-        font-size: 2.8rem;
+    .hero-title {{
+        font-size: 2.7rem;
         font-weight: 800;
         line-height: 1.15;
         letter-spacing: -0.03em;
         margin-bottom: 0.75rem;
-        background: linear-gradient(135deg, #ffffff 10%, #38bdf8 45%, #a855f7 75%, #34d399 100%);
+        background: {hero_title_grad};
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-    }
+    }}
 
-    .hero-subtitle {
-        color: #94a3b8;
-        font-size: 1.1rem;
-        max-width: 680px;
+    .hero-subtitle {{
+        color: {text_muted};
+        font-size: 1.05rem;
+        max-width: 720px;
         line-height: 1.5;
-        margin-bottom: 1.5rem;
-    }
+        margin-bottom: 1.4rem;
+    }}
 
     /* KPI Glow Cards */
-    .kpi-grid {
+    .kpi-grid {{
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 1.25rem;
         margin-bottom: 2rem;
-    }
+    }}
 
-    .kpi-card {
-        background: linear-gradient(135deg, rgba(19, 29, 49, 0.8) 0%, rgba(13, 20, 36, 0.9) 100%);
+    .kpi-card {{
+        background: {card_bg};
         border-radius: 20px;
         padding: 1.4rem 1.6rem;
         position: relative;
         overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
-    }
+        border: {card_border};
+        box-shadow: {card_shadow};
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }}
 
-    .kpi-card:hover {
+    .kpi-card:hover {{
         transform: translateY(-4px);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(56, 189, 248, 0.15);
-    }
+    }}
 
-    .kpi-card.emerald { border-top: 3px solid #10b981; }
-    .kpi-card.cyan { border-top: 3px solid #06b6d4; }
-    .kpi-card.purple { border-top: 3px solid #a855f7; }
-    .kpi-card.orange { border-top: 3px solid #f97316; }
-    .kpi-card.rose { border-top: 3px solid #f43f5e; }
+    .kpi-card.emerald {{ border-top: 4px solid #10b981; }}
+    .kpi-card.cyan {{ border-top: 4px solid #06b6d4; }}
+    .kpi-card.purple {{ border-top: 4px solid #a855f7; }}
+    .kpi-card.orange {{ border-top: 4px solid #f97316; }}
+    .kpi-card.rose {{ border-top: 4px solid #f43f5e; }}
 
-    .kpi-label {
-        font-size: 0.78rem;
+    .kpi-label {{
+        font-size: 0.76rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.06em;
-        color: #94a3b8;
+        color: {text_muted};
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 0.4rem;
-    }
+    }}
 
-    .kpi-value {
+    .kpi-value {{
         font-size: 2.1rem;
         font-weight: 800;
-        color: #ffffff;
         letter-spacing: -0.02em;
         line-height: 1.1;
-    }
-
-    .kpi-footer {
-        font-size: 0.8rem;
-        font-weight: 600;
-        margin-top: 0.5rem;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
+    }}
 
     /* Timeline Scenario Identity Cards */
-    .scenario-grid {
+    .scenario-grid {{
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         gap: 1.1rem;
         margin-bottom: 2rem;
-    }
+    }}
 
-    .scenario-card {
+    .scenario-card {{
         border-radius: 18px;
         padding: 1.35rem 1.25rem;
         position: relative;
         overflow: hidden;
-        background: linear-gradient(135deg, rgba(18, 26, 43, 0.85) 0%, rgba(11, 16, 28, 0.95) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+        background: {card_bg};
+        border: {card_border};
+        box-shadow: {card_shadow};
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         min-height: 310px;
-        transition: transform 0.25s ease, border-color 0.25s ease;
-    }
+        transition: transform 0.25s ease;
+    }}
 
-    .scenario-card:hover {
+    .scenario-card:hover {{
         transform: translateY(-4px);
-    }
+    }}
 
-    .sc-baseline { border-top: 4px solid #10b981; }
-    .sc-shock { border-top: 4px solid #f97316; }
-    .sc-delay { border-top: 4px solid #06b6d4; }
-    .sc-inflation { border-top: 4px solid #a855f7; }
-    .sc-nightmare { border-top: 4px solid #f43f5e; }
+    .sc-baseline {{ border-top: 4px solid #10b981; }}
+    .sc-shock {{ border-top: 4px solid #f97316; }}
+    .sc-delay {{ border-top: 4px solid #06b6d4; }}
+    .sc-inflation {{ border-top: 4px solid #a855f7; }}
+    .sc-nightmare {{ border-top: 4px solid #f43f5e; }}
 
-    .sc-title {
-        font-weight: 700;
+    .sc-title {{
+        font-weight: 800;
         font-size: 1rem;
-        color: #f8fafc;
         margin-bottom: 0.4rem;
-    }
+    }}
 
-    .pill-tag {
+    .pill-tag {{
         display: inline-block;
         padding: 0.25rem 0.65rem;
         border-radius: 9999px;
@@ -224,55 +227,54 @@ st.html("""
         font-weight: 800;
         letter-spacing: 0.05em;
         text-transform: uppercase;
-    }
+    }}
 
-    .pill-emerald { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); }
-    .pill-orange { background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.35); }
-    .pill-cyan { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid rgba(6, 182, 212, 0.35); }
-    .pill-purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.35); }
-    .pill-rose { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.35); }
+    .pill-emerald {{ background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.35); }}
+    .pill-orange {{ background: rgba(249, 115, 22, 0.15); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.35); }}
+    .pill-cyan {{ background: rgba(6, 182, 212, 0.15); color: #06b6d4; border: 1px solid rgba(6, 182, 212, 0.35); }}
+    .pill-purple {{ background: rgba(168, 85, 247, 0.15); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.35); }}
+    .pill-rose {{ background: rgba(244, 63, 94, 0.15); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.35); }}
 
-    .sc-val-box {
+    .sc-val-box {{
         margin: 1rem 0;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(125, 125, 125, 0.06);
+        border: {card_border};
         border-radius: 12px;
         padding: 0.75rem;
-    }
+    }}
 
-    .sc-val-label { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; }
-    .sc-val-num { font-size: 1.35rem; font-weight: 800; color: #ffffff; }
+    .sc-val-label {{ font-size: 0.7rem; color: {text_muted}; text-transform: uppercase; }}
+    .sc-val-num {{ font-size: 1.35rem; font-weight: 800; }}
 
     /* Purchase Option Cards */
-    .pathway-grid {
+    .pathway-grid {{
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 1.25rem;
         margin-top: 1.5rem;
         margin-bottom: 2rem;
-    }
+    }}
 
-    .pathway-card {
-        background: linear-gradient(135deg, rgba(18, 27, 46, 0.85) 0%, rgba(10, 16, 28, 0.95) 100%);
+    .pathway-card {{
+        background: {card_bg};
         border-radius: 20px;
         padding: 1.6rem 1.4rem;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        border: {card_border};
+        box-shadow: {card_shadow};
         position: relative;
         overflow: hidden;
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
+        transition: transform 0.25s ease;
+    }}
 
-    .pathway-card:hover {
+    .pathway-card:hover {{
         transform: translateY(-4px);
-    }
+    }}
 
-    .pathway-card.recommended {
+    .pathway-card.recommended {{
         border: 2px solid #10b981;
-        box-shadow: 0 15px 40px rgba(16, 185, 129, 0.2);
-    }
+    }}
 
-    .pathway-badge-rec {
+    .pathway-badge-rec {{
         position: absolute;
         top: 1rem;
         right: 1rem;
@@ -281,47 +283,38 @@ st.html("""
         font-weight: 800;
         font-size: 0.68rem;
         text-transform: uppercase;
-        padding: 0.2rem 0.6rem;
+        padding: 0.25rem 0.65rem;
         border-radius: 9999px;
-    }
+    }}
+
+    /* Advanced Sidebar Nav Styling */
+    section[data-testid="stSidebar"] {{
+        background: {sidebar_bg} !important;
+        border-right: {card_border};
+    }}
+
+    /* Buttons */
+    .stButton>button {{
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        color: #ffffff !important;
+        font-weight: 800 !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 0.55rem 1.4rem !important;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3) !important;
+    }}
 
     /* Polished Footer */
-    .fin-footer {
-        background: linear-gradient(180deg, transparent 0%, rgba(10, 16, 28, 0.95) 100%);
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 20px 20px 0 0;
-        padding: 2.5rem 2rem 1.5rem 2rem;
+    .fin-footer {{
+        border-top: {card_border};
+        padding: 2rem 1.5rem;
         margin-top: 3rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
         gap: 1.5rem;
-    }
-
-    /* Streamlit Form Input Beautification */
-    div[data-baseweb="input"] {
-        background-color: #0f172a !important;
-        border: 1px solid rgba(255, 255, 255, 0.12) !important;
-        border-radius: 10px !important;
-    }
-
-    /* Buttons */
-    .stButton>button {
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
-        color: #041a11 !important;
-        font-weight: 800 !important;
-        border: none !important;
-        border-radius: 12px !important;
-        padding: 0.6rem 1.5rem !important;
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35) !important;
-        transition: all 0.25s ease !important;
-    }
-    .stButton>button:hover {
-        background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
-        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5) !important;
-        transform: translateY(-2px);
-    }
+    }}
 </style>
 """)
 
@@ -350,20 +343,38 @@ def get_user_profile():
     finally:
         db.close()
 
-# Sidebar Navigation with Persona Quick-Chips
+# ==============================================================================
+# ADVANCED NAVIGATION SIDEBAR WITH 3-MODE THEME & PERSONA ENGINE
+# ==============================================================================
 with st.sidebar:
-    st.html("""
-    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 1.5rem;">
+    st.html(f"""
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 1.2rem;">
         <div style="width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #10b981 100%); display: flex; align-items: center; justify-content: center; font-size: 1.7rem; box-shadow: 0 4px 18px rgba(59, 130, 246, 0.4);">
             🌌
         </div>
         <div>
-            <div style="font-size: 1.3rem; font-weight: 800; color: #ffffff; letter-spacing: -0.02em;">Parallelverse</div>
-            <div style="font-size: 0.72rem; color: #38bdf8; font-weight: 700; text-transform: uppercase;">FinTech Simulation</div>
+            <div style="font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em;">Parallelverse</div>
+            <div style="font-size: 0.72rem; color: #06b6d4; font-weight: 700; text-transform: uppercase;">FinTech Simulation</div>
         </div>
     </div>
     """)
 
+    # 3-Mode Theme Selector
+    st.markdown("<p style='font-size: 0.72rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;'>🎨 Visual Theme Mode</p>", unsafe_allow_html=True)
+    selected_theme = st.selectbox(
+        "Theme Mode",
+        ["🌌 Dark Cyber", "☀️ Pure White", "⚡ Slate Modern"],
+        index=["🌌 Dark Cyber", "☀️ Pure White", "⚡ Slate Modern"].index(st.session_state["theme_mode"]),
+        label_visibility="collapsed"
+    )
+    if selected_theme != st.session_state["theme_mode"]:
+        st.session_state["theme_mode"] = selected_theme
+        st.rerun()
+
+    st.markdown("---")
+
+    # Advanced Navigation Menu with Groups
+    st.markdown("<p style='font-size: 0.72rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;'>🧭 Mission Control</p>", unsafe_allow_html=True)
     page = st.radio(
         "NAVIGATION MENU",
         [
@@ -374,11 +385,12 @@ with st.sidebar:
             "📅 Installment Tracker & Reminders",
             "👤 Financial Profile & Presets"
         ],
-        index=0
+        index=0,
+        label_visibility="collapsed"
     )
 
     st.markdown("---")
-    st.markdown("<p style='font-size: 0.72rem; color: #94a3b8; font-weight: 700; text-transform: uppercase;'>⚡ Instant Persona Switcher</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 0.72rem; color: #94a3b8; font-weight: 800; text-transform: uppercase;'>⚡ Instant Persona Switcher</p>", unsafe_allow_html=True)
     c_p1, c_p2 = st.columns(2)
     with c_p1:
         if st.button("🎓 Student (₹25k)", use_container_width=True):
@@ -423,44 +435,46 @@ with st.sidebar:
     )
 
     st.html(f"""
-    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 1rem; font-size: 0.82rem;">
-        <div style="color: #38bdf8; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;">Active Profile</div>
-        <div style="color: #ffffff; font-weight: 700; font-size: 1rem; margin: 0.2rem 0 0.6rem 0;">{profile.full_name}</div>
+    <div style="background: rgba(125, 125, 125, 0.06); border: {card_border}; border-radius: 14px; padding: 1rem; font-size: 0.82rem;">
+        <div style="color: #06b6d4; font-size: 0.72rem; font-weight: 800; text-transform: uppercase;">Active Persona Profile</div>
+        <div style="font-weight: 800; font-size: 1rem; margin: 0.2rem 0 0.6rem 0;">{profile.full_name}</div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
-            <span style="color: #94a3b8;">Monthly Paycheck:</span>
-            <span style="color: #ffffff; font-weight: 700;">₹{profile.monthly_income:,.0f}</span>
+            <span style="color: {text_muted};">Monthly Inflow:</span>
+            <span style="font-weight: 800;">₹{profile.monthly_income:,.0f}</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem;">
-            <span style="color: #94a3b8;">Liquid Reserve:</span>
-            <span style="color: #34d399; font-weight: 700;">₹{profile.current_savings:,.0f}</span>
+            <span style="color: {text_muted};">Liquid Reserve:</span>
+            <span style="color: #10b981; font-weight: 800;">₹{profile.current_savings:,.0f}</span>
         </div>
         <div style="display: flex; justify-content: space-between;">
-            <span style="color: #94a3b8;">Net Monthly Surplus:</span>
-            <span style="color: {'#34d399' if metrics['free_cash_flow'] >= 0 else '#fb7185'}; font-weight: 700;">₹{metrics['free_cash_flow']:,.0f}</span>
+            <span style="color: {text_muted};">Net Monthly Surplus:</span>
+            <span style="color: {'#10b981' if metrics['free_cash_flow'] >= 0 else '#f43f5e'}; font-weight: 800;">₹{metrics['free_cash_flow']:,.0f}</span>
         </div>
     </div>
-    <div style="margin-top: 1.5rem; text-align: center; font-size: 0.72rem; color: #64748b;">
+    <div style="margin-top: 1.5rem; text-align: center; font-size: 0.72rem; color: {text_muted};">
         🛡️ Track: The Vampire's Ledger<br>Hack-o-Ween PES University &bull; Dark_Knights
     </div>
     """)
+
+# Top Status Indicators
+st.caption(f"🟢 **Deterministic Financial Parallelverse Engine** | Active Mode: **{theme}** | API :8000 | RFC 5545 iCalendar Enabled")
 
 # ==============================================================================
 # PAGE 1: EXECUTIVE DASHBOARD
 # ==============================================================================
 if page == "📊 Executive Dashboard":
-    # Stunning Hero Section
     st.html(f"""
     <div class="hero-container">
-        <div class="hero-badge">
-            <span style="width: 8px; height: 8px; border-radius: 50%; background: #34d399; display: inline-block;"></span>
-            FinTech Stress Testing Engine &bull; Hack-o-Ween Edition
+        <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); padding: 0.35rem 0.9rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 800; color: #10b981; text-transform: uppercase; margin-bottom: 1rem;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+            FinTech Stress Testing Engine &bull; Hack-o-Ween PESU
         </div>
         <div class="hero-title">Simulate Your Tomorrow Before Spending Today.</div>
         <div class="hero-subtitle">
-            Most individuals commit to significant purchases like laptops or smartphones looking only at today's paycheck. 
+            Most individuals commit to significant purchases looking only at today's paycheck. 
             Financial Parallelverse simulates multiple adverse futures—delayed salaries, hospital emergencies, and inflation—so you never commit blind.
         </div>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
             <span class="pill-tag pill-emerald">⚡ 5 Concurrent Timelines</span>
             <span class="pill-tag pill-cyan">🛡️ Emergency Reserve Shield</span>
             <span class="pill-tag pill-purple">📅 RFC 5545 iCalendar Sync</span>
@@ -470,9 +484,9 @@ if page == "📊 Executive Dashboard":
     """)
 
     # 4 Glowing KPI Metric Cards
-    flow_col = "#34d399" if metrics['free_cash_flow'] >= 0 else "#fb7185"
-    runway_col = "#34d399" if metrics['months_of_runway'] >= 3 else "#fbbf24"
-    dti_col = "#fb7185" if metrics['debt_to_income_pct'] > 35 else "#34d399"
+    flow_col = "#10b981" if metrics['free_cash_flow'] >= 0 else "#f43f5e"
+    runway_col = "#10b981" if metrics['months_of_runway'] >= 3 else "#f59e0b"
+    dti_col = "#f43f5e" if metrics['debt_to_income_pct'] > 35 else "#10b981"
 
     st.html(f"""
     <div class="kpi-grid">
@@ -482,7 +496,7 @@ if page == "📊 Executive Dashboard":
                 <span>💵</span>
             </div>
             <div class="kpi-value" style="color: {flow_col};">₹{metrics['free_cash_flow']:,.0f}</div>
-            <div class="kpi-footer" style="color: #38bdf8;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #06b6d4; margin-top: 0.4rem;">
                 Savings Rate: <b>{metrics['savings_rate_pct']:.1f}%</b>
             </div>
         </div>
@@ -493,7 +507,7 @@ if page == "📊 Executive Dashboard":
                 <span>🏦</span>
             </div>
             <div class="kpi-value">₹{profile.current_savings:,.0f}</div>
-            <div class="kpi-footer" style="color: #34d399;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #10b981; margin-top: 0.4rem;">
                 Target Coverage: <b>{metrics['emergency_coverage_pct']:.0f}%</b>
             </div>
         </div>
@@ -503,8 +517,8 @@ if page == "📊 Executive Dashboard":
                 <span>Emergency Runway</span>
                 <span>🛡️</span>
             </div>
-            <div class="kpi-value">{metrics['months_of_runway']:.1f} <span style="font-size: 1.1rem; color: #94a3b8;">Mo</span></div>
-            <div class="kpi-footer" style="color: {runway_col};">
+            <div class="kpi-value">{metrics['months_of_runway']:.1f} <span style="font-size: 1.1rem; color: {text_muted};">Mo</span></div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: {runway_col}; margin-top: 0.4rem;">
                 Survival without salary
             </div>
         </div>
@@ -515,7 +529,7 @@ if page == "📊 Executive Dashboard":
                 <span>⚖️</span>
             </div>
             <div class="kpi-value" style="color: {dti_col};">{metrics['debt_to_income_pct']:.1f}%</div>
-            <div class="kpi-footer" style="color: #94a3b8;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: {text_muted}; margin-top: 0.4rem;">
                 Safe Target: &lt; 35%
             </div>
         </div>
@@ -547,7 +561,7 @@ if page == "📊 Executive Dashboard":
         fig_pie.update_layout(
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
+            font=dict(color=chart_font, family="Plus Jakarta Sans"),
             margin=dict(t=10, b=10, l=10, r=10),
             showlegend=True,
             legend=dict(
@@ -560,7 +574,7 @@ if page == "📊 Executive Dashboard":
             ),
             annotations=[
                 dict(
-                    text=f"<b>₹{profile.monthly_income:,.0f}</b><br><span style='font-size: 10px; color: #94a3b8;'>TOTAL SALARY</span>",
+                    text=f"<b>₹{profile.monthly_income:,.0f}</b><br><span style='font-size: 10px; color: {text_muted};'>TOTAL SALARY</span>",
                     x=0.5, y=0.5, font_size=15, showarrow=False
                 )
             ]
@@ -571,43 +585,43 @@ if page == "📊 Executive Dashboard":
         st.subheader("🎯 Active Planned Decision")
         cash_depletion_pct = (profile.planned_purchase_amount / max(1.0, profile.current_savings)) * 100.0
         rem_after = profile.current_savings - profile.planned_purchase_amount
-        rem_color = '#34d399' if rem_after >= profile.emergency_fund_target else '#fb7185'
-        dep_color = '#fb7185' if cash_depletion_pct > 60 else '#fbbf24'
+        rem_color = '#10b981' if rem_after >= profile.emergency_fund_target else '#f43f5e'
+        dep_color = '#f43f5e' if cash_depletion_pct > 60 else '#f59e0b'
 
         st.html(f"""
         <div class="kpi-card cyan" style="min-height: 380px;">
-            <div style="font-size: 0.72rem; color: #38bdf8; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;">Contemplated Major Purchase</div>
-            <div style="font-size: 1.5rem; font-weight: 800; color: #ffffff; margin: 0.4rem 0 0.2rem 0;">{profile.planned_purchase_name}</div>
-            <div style="font-size: 2.2rem; font-weight: 800; color: #38bdf8; margin-bottom: 1.2rem;">₹{profile.planned_purchase_amount:,.0f}</div>
+            <div style="font-size: 0.72rem; color: #06b6d4; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;">Contemplated Major Purchase</div>
+            <div style="font-size: 1.5rem; font-weight: 800; margin: 0.4rem 0 0.2rem 0;">{profile.planned_purchase_name}</div>
+            <div style="font-size: 2.2rem; font-weight: 800; color: #06b6d4; margin-bottom: 1.2rem;">₹{profile.planned_purchase_amount:,.0f}</div>
             
-            <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem; font-size: 0.85rem; color: #94a3b8;">
+            <div style="border-top: {card_border}; padding-top: 1rem; font-size: 0.85rem; color: {text_muted};">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Upfront Cash Impact:</span>
-                    <span style="color: {dep_color}; font-weight: 700;">Consumes {cash_depletion_pct:.0f}% of liquid savings</span>
+                    <span style="color: {dep_color}; font-weight: 800;">Consumes {cash_depletion_pct:.0f}% of liquid savings</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Remaining Emergency Buffer:</span>
-                    <span style="color: {rem_color}; font-weight: 700;">₹{max(0.0, rem_after):,.0f}</span>
+                    <span style="color: {rem_color}; font-weight: 800;">₹{max(0.0, rem_after):,.0f}</span>
                 </div>
             </div>
 
-            <div style="margin-top: 1.2rem; padding: 0.8rem; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px; font-size: 0.8rem; color: #fef3c7;">
+            <div style="margin-top: 1.2rem; padding: 0.8rem; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px; font-size: 0.8rem; color: #f59e0b;">
                 ⚠️ <b>Warning:</b> Buying upfront in cash drops your emergency runway significantly. Simulate before buying!
             </div>
         </div>
         """)
 
 # ==============================================================================
-# PAGE 2: PARALLEL FUTURES SIMULATOR
+# PAGE 2: PARALLEL FUTURES SIMULATOR (WITH BAR GRAPH & SPLINE MODES)
 # ==============================================================================
 elif page == "🔮 Parallel Futures Simulator":
-    st.html("""
+    st.html(f"""
     <div style="margin-bottom: 1.5rem;">
-        <h1 style="font-size: 2.4rem; font-weight: 800; background: linear-gradient(135deg, #ffffff 20%, #38bdf8 60%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.2rem;">
+        <h1 style="font-size: 2.4rem; font-weight: 800; background: {hero_title_grad}; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.2rem;">
             Parallel Financial Futures Engine
         </h1>
-        <p style="color: #94a3b8; font-size: 1rem;">
-            Simulating 5 concurrent futures under adverse life conditions: salary delays, medical emergencies, and inflation.
+        <p style="color: {text_muted}; font-size: 1rem;">
+            Simulating 5 concurrent futures under adverse life shocks: salary delays, medical emergencies, and inflation.
         </p>
     </div>
     """)
@@ -665,10 +679,18 @@ elif page == "🔮 Parallel Futures Simulator":
     else:
         st.success(f"🛡️ **Resilient Across All 5 Parallel Futures:** {sim_results['recommendation']}")
 
-    # Plotly Trajectory Chart
-    st.subheader("📈 Projected Savings Trajectory Across 5 Parallel Futures")
+    # =========================================================================
+    # BAR GRAPH & SPLINE VISUALIZATIONS (REQUESTED BY USER)
+    # =========================================================================
+    st.markdown("### 📊 Projected Savings Trajectory Across 5 Parallel Futures")
+    
+    chart_view = st.radio(
+        "Trajectory Visualization Mode",
+        ["📊 Grouped Bar Graph (Scenario Comparison)", "📈 Spline Curve Trajectory", "📉 Monthly Net Cash Flow Bars"],
+        index=0,
+        horizontal=True
+    )
 
-    fig_lines = go.Figure()
     colors_map = {
         "baseline": "#10b981",          # Emerald
         "unexpected_expense": "#f97316",# Orange
@@ -677,62 +699,143 @@ elif page == "🔮 Parallel Futures Simulator":
         "combined_adverse": "#f43f5e"   # Crimson
     }
 
-    for sc_id, sc_data in scenarios.items():
-        months = [f"M{m['month']}" for m in sc_data["timeline"]]
-        savings_vals = [m["closing_savings"] for m in sc_data["timeline"]]
-        is_hero = sc_id in ("baseline", "combined_adverse")
-        fig_lines.add_trace(go.Scatter(
-            x=months,
-            y=savings_vals,
-            mode="lines+markers",
-            name=f"{sc_data['scenario_name']}",
-            line=dict(
-                color=colors_map.get(sc_id, "#ffffff"),
-                width=3.5 if is_hero else 2,
-                shape='spline'
-            ),
-            marker=dict(size=7 if is_hero else 5),
-            hovertemplate="<b>" + sc_data['scenario_name'] + "</b><br>Month: %{x}<br>Savings Balance: ₹%{y:,.0f}<extra></extra>"
-        ))
+    # 1. GROUPED BAR GRAPH (Primary User Request)
+    if chart_view == "📊 Grouped Bar Graph (Scenario Comparison)":
+        bar_data = []
+        months_list = [f"M{m}" for m in range(1, dur + 1)]
+        
+        for sc_id, sc_data in scenarios.items():
+            for m_item in sc_data["timeline"]:
+                bar_data.append({
+                    "Month": f"Month {m_item['month']}",
+                    "Scenario": sc_data["scenario_name"],
+                    "Savings Balance (₹)": m_item["closing_savings"],
+                    "Color": colors_map.get(sc_id, "#ffffff")
+                })
+        
+        df_bars = pd.DataFrame(bar_data)
+        
+        fig_bar = px.bar(
+            df_bars,
+            x="Month",
+            y="Savings Balance (₹)",
+            color="Scenario",
+            barmode="group",
+            color_discrete_map={sc_data["scenario_name"]: colors_map[sc_id] for sc_id, sc_data in scenarios.items()}
+        )
+        
+        # Add Emergency Fund Threshold Line on Bar Graph
+        fig_bar.add_hline(
+            y=profile.emergency_fund_target,
+            line_dash="dash",
+            line_color="#f59e0b",
+            line_width=2,
+            annotation_text=f"Emergency Reserve Target (₹{profile.emergency_fund_target:,.0f})",
+            annotation_position="top right"
+        )
+        
+        fig_bar.add_hline(
+            y=0,
+            line_dash="solid",
+            line_color="#f43f5e",
+            line_width=2,
+            annotation_text="Zero Cash Deficit Threshold",
+            annotation_position="bottom right"
+        )
 
-    # Add Emergency Target Line
-    fig_lines.add_hline(
-        y=profile.emergency_fund_target,
-        line_dash="dash",
-        line_color="#fbbf24",
-        line_width=1.5,
-        annotation_text=f"Emergency Reserve Target (₹{profile.emergency_fund_target:,.0f})",
-        annotation_position="top right"
-    )
+        fig_bar.update_layout(
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor=chart_bg,
+            font=dict(color=chart_font, family="Plus Jakarta Sans"),
+            xaxis=dict(title="<b>Simulation Timeline</b>", gridcolor=chart_grid),
+            yaxis=dict(title="<b>Projected Savings Balance (₹)</b>", gridcolor=chart_grid),
+            margin=dict(l=20, r=20, t=30, b=20),
+            legend=dict(orientation="h", yanchor="bottom", y=-0.3, xanchor="center", x=0.5),
+            hovermode="x unified"
+        )
+        st.plotly_chart(fig_bar, use_container_width=True)
 
-    # Add Zero Line
-    fig_lines.add_hline(
-        y=0,
-        line_dash="solid",
-        line_color="#f43f5e",
-        line_width=2,
-        annotation_text="⚠️ Zero Cash Deficit Threshold",
-        annotation_position="bottom right"
-    )
+    # 2. SPLINE LINE GRAPH
+    elif chart_view == "📈 Spline Curve Trajectory":
+        fig_lines = go.Figure()
+        for sc_id, sc_data in scenarios.items():
+            months = [f"M{m['month']}" for m in sc_data["timeline"]]
+            savings_vals = [m["closing_savings"] for m in sc_data["timeline"]]
+            is_hero = sc_id in ("baseline", "combined_adverse")
+            fig_lines.add_trace(go.Scatter(
+                x=months,
+                y=savings_vals,
+                mode="lines+markers",
+                name=f"{sc_data['scenario_name']}",
+                line=dict(
+                    color=colors_map.get(sc_id, "#ffffff"),
+                    width=3.5 if is_hero else 2,
+                    shape='spline'
+                ),
+                marker=dict(size=7 if is_hero else 5),
+                hovertemplate="<b>" + sc_data['scenario_name'] + "</b><br>Month: %{x}<br>Savings Balance: ₹%{y:,.0f}<extra></extra>"
+            ))
 
-    fig_lines.update_layout(
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="#0c1220",
-        font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
-        xaxis=dict(title="<b>Timeline (Months)</b>", gridcolor="rgba(255,255,255,0.06)", zeroline=False),
-        yaxis=dict(title="<b>Liquid Savings Balance (₹)</b>", gridcolor="rgba(255,255,255,0.06)", zeroline=False),
-        margin=dict(l=20, r=20, t=30, b=20),
-        legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=-0.32,
-            xanchor="center",
-            x=0.5,
-            font=dict(size=11)
-        ),
-        hovermode="x unified"
-    )
-    st.plotly_chart(fig_lines, use_container_width=True)
+        fig_lines.add_hline(
+            y=profile.emergency_fund_target,
+            line_dash="dash",
+            line_color="#f59e0b",
+            line_width=1.5,
+            annotation_text=f"Emergency Reserve Target (₹{profile.emergency_fund_target:,.0f})",
+            annotation_position="top right"
+        )
+
+        fig_lines.add_hline(
+            y=0,
+            line_dash="solid",
+            line_color="#f43f5e",
+            line_width=2,
+            annotation_text="⚠️ Zero Cash Deficit Threshold",
+            annotation_position="bottom right"
+        )
+
+        fig_lines.update_layout(
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor=chart_bg,
+            font=dict(color=chart_font, family="Plus Jakarta Sans"),
+            xaxis=dict(title="<b>Timeline (Months)</b>", gridcolor=chart_grid, zeroline=False),
+            yaxis=dict(title="<b>Liquid Savings Balance (₹)</b>", gridcolor=chart_grid, zeroline=False),
+            margin=dict(l=20, r=20, t=30, b=20),
+            legend=dict(orientation="h", yanchor="bottom", y=-0.3, xanchor="center", x=0.5),
+            hovermode="x unified"
+        )
+        st.plotly_chart(fig_lines, use_container_width=True)
+
+    # 3. MONTHLY CASH FLOW COMPARISON BARS
+    else:
+        cf_data = []
+        for sc_id, sc_data in scenarios.items():
+            for m_item in sc_data["timeline"]:
+                cf_data.append({
+                    "Month": f"Month {m_item['month']}",
+                    "Scenario": sc_data["scenario_name"],
+                    "Net Cash Flow (₹)": m_item["net_cash_flow"]
+                })
+        df_cf = pd.DataFrame(cf_data)
+        fig_cf = px.bar(
+            df_cf,
+            x="Month",
+            y="Net Cash Flow (₹)",
+            color="Scenario",
+            barmode="group",
+            color_discrete_map={sc_data["scenario_name"]: colors_map[sc_id] for sc_id, sc_data in scenarios.items()}
+        )
+        fig_cf.add_hline(y=0, line_dash="solid", line_color="#f43f5e", line_width=1.5)
+        fig_cf.update_layout(
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor=chart_bg,
+            font=dict(color=chart_font, family="Plus Jakarta Sans"),
+            xaxis=dict(title="<b>Simulation Timeline</b>", gridcolor=chart_grid),
+            yaxis=dict(title="<b>Net Monthly Cash Flow (₹)</b>", gridcolor=chart_grid),
+            margin=dict(l=20, r=20, t=30, b=20),
+            legend=dict(orientation="h", yanchor="bottom", y=-0.3, xanchor="center", x=0.5)
+        )
+        st.plotly_chart(fig_cf, use_container_width=True)
 
     # 5 Parallel Futures Identity Cards
     st.subheader("🌌 Future Timelines Breakdown & Resilience Index")
@@ -748,7 +851,7 @@ elif page == "🔮 Parallel Futures Simulator":
 
     for sc_id, sc_data in scenarios.items():
         border_cls, pill_cls = class_map.get(sc_id, ("sc-baseline", "pill-emerald"))
-        low_col = "#fb7185" if sc_data["lowest_savings"] < 0 else "#ffffff"
+        low_col = "#f43f5e" if sc_data["lowest_savings"] < 0 else text_main
         
         sc_cards_html += f"""
         <div class="scenario-card {border_cls}">
@@ -760,11 +863,11 @@ elif page == "🔮 Parallel Futures Simulator":
                 <div class="sc-val-label">Lowest Savings Balance</div>
                 <div class="sc-val-num" style="color: {low_col};">₹{sc_data['lowest_savings']:,.0f}</div>
             </div>
-            <div style="font-size: 0.78rem; color: #94a3b8;">
-                <div>Resilience Score: <b style="color: #ffffff;">{sc_data['resilience_score']}/100</b></div>
-                <div>Deficit Months: <b style="color: {'#fb7185' if sc_data['negative_cash_months'] > 0 else '#34d399'};">{sc_data['negative_cash_months']}</b></div>
+            <div style="font-size: 0.78rem; color: {text_muted};">
+                <div>Resilience Score: <b style="color: {text_main};">{sc_data['resilience_score']}/100</b></div>
+                <div>Deficit Months: <b style="color: {'#f43f5e' if sc_data['negative_cash_months'] > 0 else '#10b981'};">{sc_data['negative_cash_months']}</b></div>
             </div>
-            <div style="font-size: 0.73rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.5rem; margin-top: 0.5rem;">
+            <div style="font-size: 0.73rem; color: {text_muted}; border-top: {card_border}; padding-top: 0.5rem; margin-top: 0.5rem;">
                 {sc_data['breaking_point_reason']}
             </div>
         </div>
@@ -794,12 +897,12 @@ elif page == "🔮 Parallel Futures Simulator":
 # PAGE 3: PURCHASE AFFORDABILITY PLANNER
 # ==============================================================================
 elif page == "⚖️ Purchase Affordability Matrix":
-    st.html("""
+    st.html(f"""
     <div style="margin-bottom: 1.5rem;">
-        <h1 style="font-size: 2.4rem; font-weight: 800; background: linear-gradient(135deg, #ffffff 20%, #34d399 60%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.2rem;">
+        <h1 style="font-size: 2.4rem; font-weight: 800; background: {hero_title_grad}; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.2rem;">
             Purchase Affordability Decision Matrix
         </h1>
-        <p style="color: #94a3b8; font-size: 1rem;">
+        <p style="color: {text_muted}; font-size: 1rem;">
             Comparing 4 distinct financial execution pathways: Cash vs Save-and-Wait vs Alternative vs EMI Financing.
         </p>
     </div>
@@ -844,30 +947,30 @@ elif page == "⚖️ Purchase Affordability Matrix":
         rec_cls = "recommended" if is_rec else ""
         rec_badge = '<div class="pathway-badge-rec">⭐ Best Fit</div>' if is_rec else ''
         pill_cls = "pill-emerald" if opt["risk_rating"] == "SAFE" else ("pill-orange" if opt["risk_rating"] == "CAUTION" else "pill-rose")
-        buf_col = "#34d399" if opt['emergency_buffer_preserved_pct'] >= 100 else "#fbbf24"
+        buf_col = "#10b981" if opt['emergency_buffer_preserved_pct'] >= 100 else "#f59e0b"
 
         pathways_html += f"""
         <div class="pathway-card {rec_cls}">
             {rec_badge}
-            <div style="font-weight: 800; font-size: 1.15rem; color: #ffffff; margin-bottom: 0.5rem;">{opt['option_title']}</div>
+            <div style="font-weight: 800; font-size: 1.15rem; margin-bottom: 0.5rem;">{opt['option_title']}</div>
             <span class="pill-tag {pill_cls}">{opt['risk_rating']}</span>
             
-            <div style="margin: 1.2rem 0 0.8rem 0; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.8rem;">
-                <div style="font-size: 0.72rem; color: #94a3b8; text-transform: uppercase;">Upfront Cash Required</div>
-                <div style="font-size: 1.4rem; font-weight: 800; color: #ffffff;">₹{opt['upfront_cash_required']:,.0f}</div>
+            <div style="margin: 1.2rem 0 0.8rem 0; border-top: {card_border}; padding-top: 0.8rem;">
+                <div style="font-size: 0.72rem; color: {text_muted}; text-transform: uppercase;">Upfront Cash Required</div>
+                <div style="font-size: 1.4rem; font-weight: 800;">₹{opt['upfront_cash_required']:,.0f}</div>
             </div>
 
             <div style="margin-bottom: 0.8rem;">
-                <div style="font-size: 0.72rem; color: #94a3b8; text-transform: uppercase;">Monthly Obligation</div>
-                <div style="font-size: 1.4rem; font-weight: 800; color: #38bdf8;">₹{opt['monthly_obligation']:,.0f}<span style="font-size: 0.8rem; color: #94a3b8;">/mo</span></div>
+                <div style="font-size: 0.72rem; color: {text_muted}; text-transform: uppercase;">Monthly Obligation</div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: #06b6d4;">₹{opt['monthly_obligation']:,.0f}<span style="font-size: 0.8rem; color: {text_muted};">/mo</span></div>
             </div>
 
             <div style="margin-bottom: 1rem;">
-                <div style="font-size: 0.72rem; color: #94a3b8; text-transform: uppercase;">Emergency Reserve Retained</div>
-                <div style="font-size: 1.2rem; font-weight: 700; color: {buf_col};">{opt['emergency_buffer_preserved_pct']:.0f}% <span style="font-size: 0.75rem; color: #94a3b8;">of safety target</span></div>
+                <div style="font-size: 0.72rem; color: {text_muted}; text-transform: uppercase;">Emergency Reserve Retained</div>
+                <div style="font-size: 1.2rem; font-weight: 700; color: {buf_col};">{opt['emergency_buffer_preserved_pct']:.0f}% <span style="font-size: 0.75rem; color: {text_muted};">of safety target</span></div>
             </div>
 
-            <div style="font-size: 0.78rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.8rem;">
+            <div style="font-size: 0.78rem; color: {text_muted}; border-top: {card_border}; padding-top: 0.8rem;">
                 <b>Trade-off:</b><br>{opt['key_tradeoff']}
             </div>
         </div>
@@ -879,12 +982,12 @@ elif page == "⚖️ Purchase Affordability Matrix":
 # PAGE 4: EMI CALCULATOR
 # ==============================================================================
 elif page == "🧮 Reducing-Balance EMI Engine":
-    st.html("""
+    st.html(f"""
     <div style="margin-bottom: 1.5rem;">
-        <h1 style="font-size: 2.4rem; font-weight: 800; background: linear-gradient(135deg, #ffffff 20%, #fbbf24 60%, #f97316 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.2rem;">
+        <h1 style="font-size: 2.4rem; font-weight: 800; background: {hero_title_grad}; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.2rem;">
             Precision Reducing-Balance EMI Engine
         </h1>
-        <p style="color: #94a3b8; font-size: 1rem;">
+        <p style="color: {text_muted}; font-size: 1rem;">
             Mathematical reducing-balance amortization schedules, interest totals reconciliation, and early prepayment simulation.
         </p>
     </div>
@@ -915,26 +1018,26 @@ elif page == "🧮 Reducing-Balance EMI Engine":
     <div class="kpi-grid">
         <div class="kpi-card emerald">
             <div class="kpi-label"><span>Monthly EMI</span><span>💳</span></div>
-            <div class="kpi-value" style="color: #34d399;">₹{emi_data['monthly_emi']:,.2f}</div>
-            <div class="kpi-footer" style="color: #38bdf8;">For {tenure} months</div>
+            <div class="kpi-value" style="color: #10b981;">₹{emi_data['monthly_emi']:,.2f}</div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: #06b6d4; margin-top: 0.4rem;">For {tenure} months</div>
         </div>
 
         <div class="kpi-card cyan">
             <div class="kpi-label"><span>Principal Financed</span><span>🏷️</span></div>
             <div class="kpi-value">₹{emi_data['principal_financed']:,.0f}</div>
-            <div class="kpi-footer" style="color: #94a3b8;">Excludes down payment</div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: {text_muted}; margin-top: 0.4rem;">Excludes down payment</div>
         </div>
 
         <div class="kpi-card orange">
             <div class="kpi-label"><span>Total Interest Cost</span><span>🔥</span></div>
-            <div class="kpi-value" style="color: #fb923c;">₹{emi_data['total_interest']:,.2f}</div>
-            <div class="kpi-footer" style="color: #94a3b8;">Borrowing cost</div>
+            <div class="kpi-value" style="color: #f97316;">₹{emi_data['total_interest']:,.2f}</div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: {text_muted}; margin-top: 0.4rem;">Borrowing cost</div>
         </div>
 
         <div class="kpi-card purple">
             <div class="kpi-label"><span>Total Repaid</span><span>💰</span></div>
             <div class="kpi-value">₹{emi_data['total_repayment']:,.2f}</div>
-            <div class="kpi-footer" style="color: #34d399;">Reconciled to ₹0.00</div>
+            <div style="font-size: 0.8rem; font-weight: 700; color: #10b981; margin-top: 0.4rem;">Reconciled to ₹0.00</div>
         </div>
     </div>
     """)
@@ -955,7 +1058,7 @@ elif page == "🧮 Reducing-Balance EMI Engine":
         fig_emi_pie.update_layout(
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
+            font=dict(color=chart_font, family="Plus Jakarta Sans"),
             margin=dict(t=10, b=10, l=10, r=10),
             showlegend=True,
             legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5)
@@ -977,12 +1080,12 @@ elif page == "🧮 Reducing-Balance EMI Engine":
 # PAGE 5: INSTALLMENT TRACKER & REMINDERS
 # ==============================================================================
 elif page == "📅 Installment Tracker & Reminders":
-    st.html("""
+    st.html(f"""
     <div style="margin-bottom: 1.5rem;">
-        <h1 style="font-size: 2.4rem; font-weight: 800; background: linear-gradient(135deg, #ffffff 20%, #a855f7 60%, #f43f5e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.2rem;">
+        <h1 style="font-size: 2.4rem; font-weight: 800; background: {hero_title_grad}; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.2rem;">
             Installment Tracker & Calendar Reminders
         </h1>
-        <p style="color: #94a3b8; font-size: 1rem;">
+        <p style="color: {text_muted}; font-size: 1rem;">
             Monitor active loan commitments, update installment statuses, and download one-click <b>RFC 5545 iCalendar (.ics)</b> reminders for your smartphone.
         </p>
     </div>
@@ -1074,17 +1177,17 @@ elif page == "📅 Installment Tracker & Reminders":
                         <div>
                             <span class="pill-tag pill-cyan">{plan.category}</span>
                             <span class="pill-tag {pill_st}" style="margin-left: 6px;">{status_txt}</span>
-                            <div style="font-size: 1.4rem; font-weight: 800; color: #ffffff; margin: 0.5rem 0 0.2rem 0;">{plan.purchase_name}</div>
-                            <div style="color: #94a3b8; font-size: 0.88rem;">
+                            <div style="font-size: 1.4rem; font-weight: 800; margin: 0.5rem 0 0.2rem 0;">{plan.purchase_name}</div>
+                            <div style="color: {text_muted}; font-size: 0.88rem;">
                                 Financed: <b>₹{plan.principal_financed:,.0f}</b> | 
-                                Monthly EMI: <b style="color: #34d399;">₹{plan.monthly_emi:,.2f}</b> | 
+                                Monthly EMI: <b style="color: #10b981;">₹{plan.monthly_emi:,.2f}</b> | 
                                 Due Day: <b>{plan.due_day}th of every month</b>
                             </div>
                         </div>
                         <div style="text-align: right;">
-                            <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase;">Repayment Progress</div>
-                            <div style="font-size: 1.5rem; font-weight: 800; color: #34d399;">{paid_c} / {total_c} Paid</div>
-                            <div style="font-size: 0.8rem; color: #94a3b8;">({progress_pct:.0f}% Completed)</div>
+                            <div style="font-size: 0.75rem; color: {text_muted}; text-transform: uppercase;">Repayment Progress</div>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #10b981;">{paid_c} / {total_c} Paid</div>
+                            <div style="font-size: 0.8rem; color: {text_muted};">({progress_pct:.0f}% Completed)</div>
                         </div>
                     </div>
                 </div>
@@ -1146,12 +1249,12 @@ elif page == "📅 Installment Tracker & Reminders":
 # PAGE 6: FINANCIAL PROFILE
 # ==============================================================================
 elif page == "👤 Financial Profile & Presets":
-    st.html("""
+    st.html(f"""
     <div style="margin-bottom: 1.5rem;">
-        <h1 style="font-size: 2.4rem; font-weight: 800; background: linear-gradient(135deg, #ffffff 20%, #38bdf8 60%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.2rem;">
+        <h1 style="font-size: 2.4rem; font-weight: 800; background: {hero_title_grad}; -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.2rem;">
             Financial Profile & Scenario Assumptions
         </h1>
-        <p style="color: #94a3b8; font-size: 1rem;">
+        <p style="color: {text_muted}; font-size: 1rem;">
             Configure your actual baseline finances or test custom financial setups. Changes persist automatically to SQLite.
         </p>
     </div>
@@ -1205,18 +1308,18 @@ elif page == "👤 Financial Profile & Presets":
 # ==============================================================================
 # POLISHED FINTECH FOOTER
 # ==============================================================================
-st.html("""
+st.html(f"""
 <div class="fin-footer">
     <div>
-        <div style="font-weight: 800; font-size: 1.15rem; color: #ffffff;">🌌 Financial Parallelverse</div>
-        <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.2rem;">
+        <div style="font-weight: 800; font-size: 1.15rem;">🌌 Financial Parallelverse</div>
+        <div style="font-size: 0.8rem; color: {text_muted}; margin-top: 0.2rem;">
             Explore your financial futures before making a decision &bull; Built for Hack-o-Ween 2nd Edition (PES University)
         </div>
-        <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.4rem;">
+        <div style="font-size: 0.75rem; color: {text_muted}; margin-top: 0.4rem;">
             Track: <b>The Vampire's Ledger (FinTech)</b> &bull; Team: <b>Dark_Knights</b> (Ratnala Aneesh, Raghoothama T R, Vatsal Soni)
         </div>
     </div>
-    <div style="display: flex; gap: 20px; font-size: 0.82rem; color: #94a3b8;">
+    <div style="display: flex; gap: 20px; font-size: 0.82rem; color: {text_muted};">
         <div>🟢 <b>FastAPI</b> :8000</div>
         <div>🛡️ <b>SQLite 3</b> Local DB</div>
         <div>📅 <b>RFC 5545</b> iCal Export</div>
