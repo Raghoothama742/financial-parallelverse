@@ -91,5 +91,5 @@ class EMICalculator:
             "monthly_emi": base_emi,
             "total_interest": cumulative_interest,
             "total_repayment": total_paid,
-            "schedule": schedule
+            "schedule":   schedule
         }

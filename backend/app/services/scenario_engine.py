@@ -3,7 +3,8 @@ from .emi_calculator import EMICalculator, round_curr
 
 class ScenarioEngine:
     @staticmethod
-    def simulate_all_scenarios(
+    def simulate_all_scenarios
+(
         duration_months: int,
         monthly_income: float,
         current_savings: float,
