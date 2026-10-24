@@ -94,7 +94,12 @@ class ScenarioSimulationRequest(BaseModel):
     unexpected_expense_month: int = Field(default=3, ge=1)
     salary_delay_months: int = Field(default=1, ge=0)
     salary_delay_start_month: int = Field(default=2, ge=1)
-    expense_increase_pct: float = Field(default=15.0, ge=0)
+    expense_increase_pct: float = Field(default=15.0, ge=0, le=300)
+    income_reduction_pct: float = Field(default=25.0, ge=0, le=100, description="Income reduction in the combined stress scenario")
+    recurring_emergency_cost: float = Field(default=5000.0, ge=0, description="Recurring unexpected monthly cost during the combined stress scenario")
+    recurring_cost_start_month: int = Field(default=3, ge=1, le=36)
+    monthly_inflation_pct: float = Field(default=1.0, ge=0, le=25, description="Additional month-on-month expense growth in the inflation scenarios")
+    investment_return_pct: float = Field(default=0.0, ge=-100, le=100, description="Optional monthly savings return assumption, expressed as an annual percentage")
 
 class ScenarioMonthItem(BaseModel):
     month: int
