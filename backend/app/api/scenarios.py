@@ -39,7 +39,12 @@ def simulate_scenarios(req: ScenarioSimulationRequest, db: Session = Depends(get
         unexpected_expense_month=req.unexpected_expense_month,
         salary_delay_months=req.salary_delay_months,
         salary_delay_start_month=req.salary_delay_start_month,
-        expense_increase_pct=req.expense_increase_pct
+        expense_increase_pct=req.expense_increase_pct,
+        income_reduction_pct=req.income_reduction_pct,
+        recurring_emergency_cost=req.recurring_emergency_cost,
+        recurring_cost_start_month=req.recurring_cost_start_month,
+        monthly_inflation_pct=req.monthly_inflation_pct,
+        investment_return_pct=req.investment_return_pct
     )
 
     # Optionally persist simulation record
